@@ -33,25 +33,28 @@ import android.media.MediaPlayer;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.sun.tools.javac.util.Context;
 
 
-@TeleOp(name="Sounds", group="Linear Opmode")
 //@Disabled
-public class Musiv extends LinearOpMode {
+public class Musiv{
     MediaPlayer sounds;
-    @Override
-    public void runOpMode() {
-        sounds = MediaPlayer.create(this.hardwareMap.appContext,R.raw.sound);
-        waitForStart();
-        try{
+
+    public Musiv(android.content.Context context, int data){
+        sounds = MediaPlayer.create(context,data);
+        sounds.setLooping(false);
+
+    }
+
+    public void prepare(){
+        try {
             sounds.prepare();
-        }catch(Exception e){}
-        while(opModeIsActive()){
+        }catch (Exception e){}
+    }
+
+    public void play(){
+        try {
             sounds.start();
-            sleep(1000);
-        idle();
-        }
-        sounds.stop();
+        }catch (Exception e){}
     }
 }

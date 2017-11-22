@@ -46,8 +46,8 @@ public class NormalWheelAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        L = hardwareMap.dcMotor.get("fl");
-        R = hardwareMap.dcMotor.get("fr");
+        L = hardwareMap.dcMotor.get("l");
+        R = hardwareMap.dcMotor.get("r");
         R.setDirection(DcMotorSimple.Direction.REVERSE);
         waitForStart();
         moveForward(12);

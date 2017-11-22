@@ -38,23 +38,29 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 //@Disabled
 public class NormalWheelTele extends LinearOpMode {
     DcMotor L,R;
-    float x,y,x2;
+    float y,x2;
     float forM,backM;
+    Musiv horn;
     @Override
     public void runOpMode() {
+        horn = new Musiv(this.hardwareMap.appContext, com.qualcomm.ftcrobotcontroller.R.raw.air);
         L = hardwareMap.dcMotor.get("l");
         R = hardwareMap.dcMotor.get("r");
         R.setDirection(DcMotor.Direction.REVERSE);
         telemetry.addData("setup","initialized");
         telemetry.update();
         waitForStart();
+        horn.prepare();
         while(opModeIsActive()){
-            x = gamepad1.left_stick_x;
-            if(Math.abs(x) <.3)x = 0;
+            y = gamepad1.left_stick_y;
+            if(Math.abs(y) <.3)y = 0;
             x2 = gamepad1.right_stick_x;
             if(Math.abs(x2) <.3)x2 = 0;
-            L.setPower(x + x2);
-            R.setPower(x - x2);
+            L.setPower(y + x2);
+            R.setPower(y - x2);
+            if(gamepad1.a){
+                horn.play();
+            }
         idle();
         }
     }
