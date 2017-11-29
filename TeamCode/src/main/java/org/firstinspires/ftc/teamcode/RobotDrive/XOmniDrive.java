@@ -238,4 +238,23 @@ public class XOmniDrive implements MoveableRobot{
         BR.setPower(0);
         FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
+    
+    /**
+    * tests robot to make sure it is in working order by rotating each wheel forward for a variable amt of time
+    * @param    seconds time spent moving motors
+    */
+    public void testDrive(int seconds){
+        FL.setPower(0.5);
+        sleep(seconds*1000);
+        FL.setPower(0);
+        FR.setPower(0.5);
+        sleep(seconds*1000);
+        FR.setPower(0);
+        BR.setPower(0.5);
+        sleep(seconds*1000);
+        BR.setPower(0);
+        BL.setPower(0.5);
+        sleep(seconds*1000);
+        BL.setPower(0);
+    }
 }
