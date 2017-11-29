@@ -34,94 +34,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
+
 
 @Autonomous(name="Normal Wheel Auto", group="Auto")
 public class NormalWheelAuto extends LinearOpMode {
-    DcMotor L,R;
-    final double Dr = 19;
-    final double Cr = Math.PI * Dr;
-    final double Dw = 4;
-    final double Cw = Math.PI * Dw;
-    final int Mstep = 1120;
-
+    NormalDrive robot;
     @Override
     public void runOpMode() {
-        L = hardwareMap.dcMotor.get("l");
-        R = hardwareMap.dcMotor.get("r");
-        R.setDirection(DcMotorSimple.Direction.REVERSE);
+        robot = new NormalDrive(hardwareMap);
         waitForStart();
-        moveForward(12);
-        moveBackward(12);
-        cClockwise(90);
-        clockwise(90);
+        robot.forward(12);
         }
-
-
-    public void moveForward(double inches){
-        int pos = (int)(inches * Mstep / Cw);
-        L.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        R.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        L.setTargetPosition(pos);
-        R.setTargetPosition(pos);
-        L.setPower(0.3);
-        R.setPower(0.3);
-        while(L.isBusy()&&R.isBusy()) {
-        }
-        L.setPower(0);
-        R.setPower(0);
-        L.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        R.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    public void moveBackward(double inches){
-        int pos = -(int)(inches * Mstep / Cw);
-        L.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        R.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        L.setTargetPosition(pos);
-        R.setTargetPosition(pos);
-        L.setPower(0.3);
-        R.setPower(0.3);
-        while(L.isBusy()&&R.isBusy()) {
-        }
-        L.setPower(0);
-        R.setPower(0);
-        L.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        R.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-    }
-
-
-    public void clockwise(double deg){
-        int pos = (int)(deg * Cr * Math.sqrt(2) * Mstep / 360 / Cw);
-        L.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        L.setTargetPosition(pos);
-        R.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        R.setTargetPosition(-pos);
-        L.setPower(0.3);
-        R.setPower(0.3);
-        while(L.isBusy() && R.isBusy()){
-        }
-        L.setPower(0);
-        R.setPower(0);
-        L.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        R.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    public void cClockwise(double deg){
-        int pos = (int)(deg * Cr * Math.sqrt(2) * Mstep / 360 / Cw);
-        L.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        L.setTargetPosition(-pos);
-        R.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        R.setTargetPosition(pos);
-        L.setPower(0.3);
-        R.setPower(0.3);
-        while(L.isBusy() && R.isBusy()){
-        }
-        L.setPower(0);
-        R.setPower(0);
-        L.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        R.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-
 }

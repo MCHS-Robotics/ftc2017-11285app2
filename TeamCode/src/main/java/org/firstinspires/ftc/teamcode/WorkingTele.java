@@ -32,33 +32,47 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
+import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
+import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@TeleOp(name="Normal Wheel Tele", group="Linear Opmode")
+@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
 //@Disabled
-public class NormalWheelTele extends LinearOpMode {
-    NormalDrive robot;
-    float forM,backM;
-    Musiv horn;
+public class WorkingTele extends LinearOpMode {
+    MoveableRobot robot;
+    DcMotor liftP;
+    Servo liftL,liftR;
+    final int[] posL = {0,1},posR = {0,1};
+    boolean stateC = false;
     @Override
     public void runOpMode() {
-        horn = new Musiv(this.hardwareMap.appContext, com.qualcomm.ftcrobotcontroller.R.raw.air);
+        liftP = hardwareMap.dcMotor.get("liftM");
+        liftL = hardwareMap.servo.get("liftL");
+        liftR = hardwareMap.servo.get("liftR");
 
-        robot = new NormalDrive(.3,1,1,hardwareMap);
+        liftL.setPosition(posL[0]);
+        liftR.setPosition(posR[0]);
+
+        robot = new XOmniDrive(hardwareMap);
 
         telemetry.addData("setup","initialized");
         telemetry.update();
         waitForStart();
-        horn.prepare();
         while(opModeIsActive()){
             robot.run(gamepad1,gamepad2);
-            if(gamepad1.a){
-                horn.play();
+
+            if(!stateC && gamepad1.left_bumper){
+                stateC =true;
+                liftL.setPosition(posL[1]);
+                liftR.setPosition(posR[1]);
             }
-        idle();
+            if(stateC && !gamepad1.left_bumper){
+                stateC = false;
+            }
+
+            idle();
         }
     }
 }
