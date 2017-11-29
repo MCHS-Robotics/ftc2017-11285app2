@@ -26,4 +26,6 @@ public interface MoveableRobot {
     void clockwise(int degrees);
 
     void cClockwise(int degrees);
+    
+    void testDrive(int seconds);
 }
