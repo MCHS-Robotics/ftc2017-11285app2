@@ -207,4 +207,17 @@ public class NormalDrive implements MoveableRobot{
         L.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         R.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
+    
+    /**
+    * tests robot to make sure it is in working order by rotating each wheel forward for a variable amt of time
+    * @param    seconds time spent moving motors
+    */
+    public void testDrive(int seconds){
+        L.setPower(0.5);
+        sleep(seconds*1000);
+        L.setPower(0);
+        R.setPower(0.5);
+        sleep(seconds*1000);
+        R.setPower(0);
+    }
 }
