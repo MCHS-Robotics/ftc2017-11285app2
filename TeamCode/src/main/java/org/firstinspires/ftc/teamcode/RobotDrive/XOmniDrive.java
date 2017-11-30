@@ -8,7 +8,6 @@ public class XOmniDrive implements MoveableRobot{
 
     DcMotor FL,FR,BR,BL,liftP;
     float y,x2,x,deadZone,turnPower,movePower;
-    boolean debug;
     Telemetry telemetry;
 
     double Dr;
@@ -37,25 +36,6 @@ public class XOmniDrive implements MoveableRobot{
         init(hardwareMap);
     }
     
-    /**
-    * Creates a basic x-omni drive for the robot with set defaults (Debug mode)
-    * @param    hardwaremap the hardware map of the robot for initialization
-    * @param    telemetry   telemetry for the debugging
-    */
-    public XOmniDrive(HardwareMap hardwareMap, Telemetry telemetry){
-        deadZone = 0;
-        turnPower = .5f;
-        movePower = .5f;
-
-        Dr = 19;
-        Cr = Math.PI * Dr;
-        Dw = 4;
-        Cw = Math.PI * Dw;
-        Mstep = 1120;
-
-        init(hardwareMap,telemetry);
-    }
-
      /**
     * Creates a x-omni drive for the robot with variables for the teleop
     * @param    deadZone    the radius (from 0-1) of the deadzone from the gamepad
@@ -78,28 +58,6 @@ public class XOmniDrive implements MoveableRobot{
     }
     
       /**
-    * Creates a x-omni drive for the robot with variables for the teleop (Debug mode)
-    * @param    deadZone    the radius (from 0-1) of the deadzone from the gamepad
-    * @param    turnPower   scaling modifier for the turning power of the robot
-    * @param    movePower   scaling modifier for the translation movement power of the robot
-    * @param    hardwaremap the hardware map of the robot for initialization
-    * @param    telemetry   telemetry for the debugging
-    */
-    public XOmniDrive(float deadZone, float turnPower, float movePower, HardwareMap hardwareMap, Telemetry telemetry){
-        this.deadZone = deadZone;
-        this.turnPower = turnPower;
-        this.movePower = movePower;
-
-        Dr = 19;
-        Cr = Math.PI * Dr;
-        Dw = 4;
-        Cw = Math.PI * Dw;
-        Mstep = 1120;
-
-        init(hardwareMap,telemetry);
-    }
-
-      /**
     * Creates a x-omni drive for the robot with variables for the autonomous
     * @param    robotDiameter   the length, in inches, between 2 diagonal wheels 
     * @param    wheelDiameter   the diameter, in inches, of the wheels used on the robot
@@ -120,28 +78,6 @@ public class XOmniDrive implements MoveableRobot{
         init(hardwareMap);
     }
     
-      /**
-    * Creates a x-omni drive for the robot with variables for the autonomous (Debug mode)
-    * @param    robotDiameter   the length, in inches, between 2 diagonal wheels 
-    * @param    wheelDiameter   the diameter, in inches, of the wheels used on the robot
-    * @param    motorControllerSteps    the amount of ticks the motors have in one revolution
-    * @param    hardwaremap the hardware map of the robot for initialization
-    * @param    telemetry   telemetry for the debugging
-    */
-    public XOmniDrive(double robotDiameter, double wheelDiameter, int motorControllerSteps, HardwareMap hardwareMap,Telemetry telemetry){
-        deadZone = 0;
-        turnPower = .5f;
-        movePower = .5f;
-
-        Dr = robotDiameter;
-        Cr = Math.PI * Dr;
-        Dw = wheelDiameter;
-        Cw = Math.PI * Dw;
-        Mstep = motorControllerSteps;
-
-        init(hardwareMap,telemetry);
-    }
-    
        /**
     * Initializes the motors for the robot
     * @param    hardwaremap the hardware map of the robot for initialization
@@ -157,24 +93,6 @@ public class XOmniDrive implements MoveableRobot{
         
         telemetry = null;
         dubug = false;
-    }
-
-       /**
-    * Initializes the motors for the robot (Debug mode)
-    * @param    hardwaremap the hardware map of the robot for initialization
-    * @param    telemetry   telemetry for the debugging
-    */
-    public void init(HardwareMap hardwareMap, Telemetry telemetry){
-        FL = hardwareMap.dcMotor.get("fl");
-        FR = hardwareMap.dcMotor.get("fr");
-        BL = hardwareMap.dcMotor.get("bl");
-        BR = hardwareMap.dcMotor.get("br");
-
-        FR.setDirection(DcMotor.Direction.REVERSE);
-        BR.setDirection(DcMotor.Direction.REVERSE);
-        
-        debug = true;
-        this.telemetry = telemetry;
     }
 
     //Tele
@@ -214,10 +132,7 @@ public class XOmniDrive implements MoveableRobot{
         BL.setPower(0.3);
         BR.setPower(0.3);
         while(FL.isBusy()){
-            if(debug){
-        telemetry.addData("Position", "FL pos: " + FL.getCurrentPosition());
-        telemetry.update();
-        }
+        
         }
         FL.setPower(0);
         FR.setPower(0);
@@ -239,10 +154,7 @@ public class XOmniDrive implements MoveableRobot{
         BL.setPower(-0.3);
         BR.setPower(-0.3);
         while(FL.isBusy()){
-            if(debug){
-        telemetry.addData("Position", "FL pos: " + FL.getCurrentPosition());
-        telemetry.update();
-        }
+          
         }
         FL.setPower(0);
         FR.setPower(0);
@@ -264,10 +176,7 @@ public class XOmniDrive implements MoveableRobot{
         BL.setPower(-0.3);
         BR.setPower(0.3);
         while(FL.isBusy()){
-            if(debug){
-        telemetry.addData("Position", "FL pos: " + FL.getCurrentPosition());
-        telemetry.update();
-        }
+       
         }
         FL.setPower(0);
         FR.setPower(0);
@@ -289,10 +198,7 @@ public class XOmniDrive implements MoveableRobot{
         BL.setPower(0.3);
         BR.setPower(-0.3);
         while(FL.isBusy()){
-            if(debug){
-        telemetry.addData("Position", "FL pos: " + FL.getCurrentPosition());
-        telemetry.update();
-        }
+        
         }
         FL.setPower(0);
         FR.setPower(0);
@@ -314,10 +220,7 @@ public class XOmniDrive implements MoveableRobot{
         BL.setPower(0.3);
         BR.setPower(-0.3);
         while(FL.isBusy()){
-        if(debug){
-        telemetry.addData("Position", "FL pos: " + FL.getCurrentPosition());
-        telemetry.update();
-        }
+      
         }
         FL.setPower(0);
         FR.setPower(0);
@@ -339,10 +242,7 @@ public class XOmniDrive implements MoveableRobot{
         BL.setPower(-0.3);
         BR.setPower(0.3);
         while(FL.isBusy()){
-        if(debug){
-        telemetry.addData("Position", "FL pos: " + FL.getCurrentPosition());
-        telemetry.update();
-        }
+       
         }
         FL.setPower(0);
         FR.setPower(0);
