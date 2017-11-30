@@ -121,7 +121,7 @@ public class XOmniDrive implements MoveableRobot{
     }
     
       /**
-    * Creates a x-omni drive for the robot with variables for the autonomous 
+    * Creates a x-omni drive for the robot with variables for the autonomous (Debug mode)
     * @param    robotDiameter   the length, in inches, between 2 diagonal wheels 
     * @param    wheelDiameter   the diameter, in inches, of the wheels used on the robot
     * @param    motorControllerSteps    the amount of ticks the motors have in one revolution
