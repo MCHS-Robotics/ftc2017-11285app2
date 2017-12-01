@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
-@Autonomous(name="Kaleb Auto", group="Auto")
+@Autonomous(name="Kaleb Auto ", group="Auto")
 public class KalebQuickAuto extends LinearOpMode {
     DcMotor fl,fr,bl,br;
     final double Dr = 19;

@@ -27,41 +27,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.Musiv;
+import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
 
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="Normal Wheel Teleop", group="Linear   Opmode")
 //@Disabled
-public class TestOpMode extends LinearOpMode {
-    DcMotor FL,FR,BR,BL;
-    float x,y,x2;
+public class NormalWheelTele extends LinearOpMode {
+    NormalDrive robot;
+    float forM,backM;
+    Musiv horn;
     @Override
     public void runOpMode() {
-        FL = hardwareMap.dcMotor.get("fl");
-        FR = hardwareMap.dcMotor.get("fr");
-        BL = hardwareMap.dcMotor.get("bl");
-        BR = hardwareMap.dcMotor.get("br");
-        FR.setDirection(DcMotor.Direction.REVERSE);
-        BR.setDirection(DcMotor.Direction.REVERSE);
+        horn = new Musiv(this.hardwareMap.appContext, com.qualcomm.ftcrobotcontroller.R.raw.sonic);
+
+        robot = new NormalDrive(.3f,1f,1f,hardwareMap);
+
         telemetry.addData("setup","initialized");
         telemetry.update();
         waitForStart();
+        horn.prepare();
         while(opModeIsActive()){
-            x = gamepad1.left_stick_x;
-            y = -gamepad1.left_stick_y;
-            x2 = gamepad1.right_stick_x;
-            FL.setPower(x+y+x2);
-            FR.setPower(-x+y-x2);
-            BL.setPower(-x+y+x2);
-            BR.setPower(x+y-x2);
+            robot.run(gamepad1,gamepad2);
+            if(gamepad1.a){
+                horn.play();
+            }
         idle();
         }
     }

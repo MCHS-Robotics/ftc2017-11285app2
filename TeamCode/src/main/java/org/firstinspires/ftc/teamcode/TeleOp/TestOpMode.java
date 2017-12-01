@@ -27,37 +27,41 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
 
-
-@TeleOp(name="Normal Wheel Tele", group="Linear Opmode")
+@TeleOp(name="Basic: Linear OpMode ", group="Linear Opmode ")
 //@Disabled
-public class NormalWheelTele extends LinearOpMode {
-    NormalDrive robot;
-    float forM,backM;
-    Musiv horn;
+public class TestOpMode extends LinearOpMode {
+    DcMotor FL,FR,BR,BL;
+    float x,y,x2;
     @Override
     public void runOpMode() {
-        horn = new Musiv(this.hardwareMap.appContext, com.qualcomm.ftcrobotcontroller.R.raw.air);
-
-        robot = new NormalDrive(.3,1,1,hardwareMap);
-
+        FL = hardwareMap.dcMotor.get("fl");
+        FR = hardwareMap.dcMotor.get("fr");
+        BL = hardwareMap.dcMotor.get("bl");
+        BR = hardwareMap.dcMotor.get("br");
+        FR.setDirection(DcMotor.Direction.REVERSE);
+        BR.setDirection(DcMotor.Direction.REVERSE);
         telemetry.addData("setup","initialized");
         telemetry.update();
         waitForStart();
-        horn.prepare();
         while(opModeIsActive()){
-            robot.run(gamepad1,gamepad2);
-            if(gamepad1.a){
-                horn.play();
-            }
+            x = gamepad1.left_stick_x;
+            y = -gamepad1.left_stick_y;
+            x2 = gamepad1.right_stick_x;
+            FL.setPower(x+y+x2);
+            FR.setPower(-x+y-x2);
+            BL.setPower(-x+y+x2);
+            BR.setPower(x+y-x2);
         idle();
         }
     }

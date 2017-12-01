@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import static java.lang.Thread.sleep;
+
 public class NormalDrive implements MoveableRobot{
 
     DcMotor L,R;
@@ -19,7 +21,7 @@ public class NormalDrive implements MoveableRobot{
 
     /**
     * Creates a basic normal drive for the robot with set defaults
-    * @param    hardwaremap the hardware map of the robot for initialization
+    * @param    hardwareMap the hardware map of the robot for initialization
     */
     public NormalDrive(HardwareMap hardwareMap){
         deadZone = 0;
@@ -40,7 +42,7 @@ public class NormalDrive implements MoveableRobot{
     * @param    deadZone    the radius (from 0-1) of the deadzone from the gamepad
     * @param    turnPower   scaling modifier for the turning power of the robot
     * @param    movePower   scaling modifier for the translation movement power of the robot
-    * @param    hardwaremap the hardware map of the robot for initialization
+    * @param    hardwareMap the hardware map of the robot for initialization
     */
     public NormalDrive(float deadZone,float turnPower,float movePower,HardwareMap hardwareMap){
         this.deadZone = deadZone;
@@ -61,7 +63,7 @@ public class NormalDrive implements MoveableRobot{
     * @param    robotDiameter   the length, in inches, between 2 diagonal wheels 
     * @param    wheelDiameter   the diameter, in inches, of the wheels used on the robot
     * @param    motorControllerSteps    the amount of ticks the motors have in one revolution
-    * @param    hardwaremap the hardware map of the robot for initialization
+    * @param    hardwareMap the hardware map of the robot for initialization
     */
     public NormalDrive(double robotDiameter,double wheelDiameter,int motorControllerSteps,HardwareMap hardwareMap){
         deadZone = 0;
@@ -79,7 +81,7 @@ public class NormalDrive implements MoveableRobot{
 
      /**
     * Initializes the motors for the robot
-    * @param    hardwaremap the hardware map of the robot for initialization
+    * @param    hardwareMap the hardware map of the robot for initialization
     */
     public void init(HardwareMap hardwareMap){
         L = hardwareMap.dcMotor.get("l");
@@ -213,11 +215,13 @@ public class NormalDrive implements MoveableRobot{
     * @param    seconds time spent moving motors
     */
     public void testDrive(int seconds){
-        L.setPower(0.5);
-        sleep(seconds*1000);
-        L.setPower(0);
-        R.setPower(0.5);
-        sleep(seconds*1000);
-        R.setPower(0);
-    }
+        try {
+            L.setPower(0.5);
+            wait(seconds * 1000);
+            L.setPower(0);
+            R.setPower(0.5);
+            wait(seconds * 1000);
+            R.setPower(0);
+        }catch(Exception e){}
+        }
 }

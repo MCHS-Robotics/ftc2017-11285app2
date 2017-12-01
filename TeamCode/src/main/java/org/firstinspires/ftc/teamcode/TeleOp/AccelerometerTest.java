@@ -27,51 +27,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Accelerator;
 import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="Accelerometer", group="Linear Opmode")
 //@Disabled
-public class WorkingTele extends LinearOpMode {
-    MoveableRobot robot;
-    DcMotor liftP;
-    Servo liftL,liftR;
-    final int[] posL = {0,1},posR = {0,1};
-    boolean stateC = false;
+public class AccelerometerTest extends LinearOpMode {
+    Accelerator accel;
     @Override
     public void runOpMode() {
-        liftP = hardwareMap.dcMotor.get("liftM");
-        liftL = hardwareMap.servo.get("liftL");
-        liftR = hardwareMap.servo.get("liftR");
-
-        liftL.setPosition(posL[0]);
-        liftR.setPosition(posR[0]);
-
-        robot = new XOmniDrive(hardwareMap);
+        accel = new Accelerator(hardwareMap);
 
         telemetry.addData("setup","initialized");
         telemetry.update();
         waitForStart();
+        accel.init();
         while(opModeIsActive()){
-            robot.run(gamepad1,gamepad2);
-
-            if(!stateC && gamepad1.left_bumper){
-                stateC =true;
-                liftL.setPosition(posL[1]);
-                liftR.setPosition(posR[1]);
-            }
-            if(stateC && !gamepad1.left_bumper){
-                stateC = false;
-            }
-
+            telemetry.addData("Data", accel.getImu().getAcceleration());
+            telemetry.update();
             idle();
         }
     }

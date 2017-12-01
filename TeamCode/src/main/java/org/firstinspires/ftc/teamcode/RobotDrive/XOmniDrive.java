@@ -20,7 +20,7 @@ public class XOmniDrive implements MoveableRobot{
 
      /**
     * Creates a basic x-omni drive for the robot with set defaults
-    * @param    hardwaremap the hardware map of the robot for initialization
+    * @param    hardwareMap the hardware map of the robot for initialization
     */
     public XOmniDrive(HardwareMap hardwareMap){
         deadZone = 0;
@@ -41,7 +41,7 @@ public class XOmniDrive implements MoveableRobot{
     * @param    deadZone    the radius (from 0-1) of the deadzone from the gamepad
     * @param    turnPower   scaling modifier for the turning power of the robot
     * @param    movePower   scaling modifier for the translation movement power of the robot
-    * @param    hardwaremap the hardware map of the robot for initialization
+    * @param    hardwareMap the hardware map of the robot for initialization
     */
     public XOmniDrive(float deadZone, float turnPower, float movePower, HardwareMap hardwareMap){
         this.deadZone = deadZone;
@@ -62,7 +62,7 @@ public class XOmniDrive implements MoveableRobot{
     * @param    robotDiameter   the length, in inches, between 2 diagonal wheels 
     * @param    wheelDiameter   the diameter, in inches, of the wheels used on the robot
     * @param    motorControllerSteps    the amount of ticks the motors have in one revolution
-    * @param    hardwaremap the hardware map of the robot for initialization
+    * @param    hardwareMap the hardware map of the robot for initialization
     */
     public XOmniDrive(double robotDiameter, double wheelDiameter, int motorControllerSteps, HardwareMap hardwareMap){
         deadZone = 0;
@@ -80,7 +80,7 @@ public class XOmniDrive implements MoveableRobot{
     
        /**
     * Initializes the motors for the robot
-    * @param    hardwaremap the hardware map of the robot for initialization
+    * @param    hardwareMap the hardware map of the robot for initialization
     */
     public void init(HardwareMap hardwareMap){
         FL = hardwareMap.dcMotor.get("fl");
@@ -92,7 +92,6 @@ public class XOmniDrive implements MoveableRobot{
         BR.setDirection(DcMotor.Direction.REVERSE);
         
         telemetry = null;
-        dubug = false;
     }
 
     //Tele
@@ -256,17 +255,19 @@ public class XOmniDrive implements MoveableRobot{
     * @param    seconds time spent moving motors
     */
     public void testDrive(int seconds){
-        FL.setPower(0.5);
-        sleep(seconds*1000);
-        FL.setPower(0);
-        FR.setPower(0.5);
-        sleep(seconds*1000);
-        FR.setPower(0);
-        BR.setPower(0.5);
-        sleep(seconds*1000);
-        BR.setPower(0);
-        BL.setPower(0.5);
-        sleep(seconds*1000);
-        BL.setPower(0);
-    }
+        try {
+            FL.setPower(0.5);
+            wait(seconds * 1000);
+            FL.setPower(0);
+            FR.setPower(0.5);
+            wait(seconds * 1000);
+            FR.setPower(0);
+            BR.setPower(0.5);
+            wait(seconds * 1000);
+            BR.setPower(0);
+            BL.setPower(0.5);
+            wait(seconds * 1000);
+            BL.setPower(0);
+        }catch(Exception e){}
+        }
 }
