@@ -270,4 +270,55 @@ public class XOmniDrive implements MoveableRobot{
             BL.setPower(0);
         }catch(Exception e){}
         }
+
+    //Moves the robot forward using time
+     //* @param milliseconds
+     //*/
+    public void ForwardTime(int milliseconds){
+        FL.setPower(0.5);
+        FR.setPower(0.5);
+        BR.setPower(0.5);
+        BL.setPower(0.5);
+
+     }
+
+     //Moves the robot backwards using time
+     public void BackwardTime(int milliseconds){
+         FL.setPower(-0.5);
+         FR.setPower(-0.5);
+         BR.setPower(-0.5);
+         BL.setPower(-0.5);
+     }
+
+     //moves the robot to the left using time
+     public void LeftTime(int milliseconds){
+         FL.setPower(-0.5);
+         FR.setPower(0.5);
+         BR.setPower(-0.5);
+         BL.setPower(0.5);
+     }
+
+     //moves the robot to the right using time
+     public void RightTime(int milliseconds){
+         FL.setPower(0.5);
+         FR.setPower(-0.5);
+         BR.setPower(0.5);
+         BL.setPower(-0.5);
+     }
+     //Turns the robot clockwise
+     public void ClockwiseTime(int milliseconds)
+     {
+         FL.setPower(0.5);
+         FR.setPower(-0.5);
+         BR.setPower(-0.5);
+         BL.setPower(0.5);
+     }
+     //Turns the robot counter clockwise using time
+     public void CounterClockwiseTime(int milliseconds){
+         FL.setPower(-0.5);
+         FR.setPower(0.5);
+         BR.setPower(0.5);
+         BL.setPower(-0.5);
+     }
+
 }
