@@ -44,7 +44,7 @@ public class NormalWheelTele extends LinearOpMode {
     Musiv horn;
     @Override
     public void runOpMode() {
-        horn = new Musiv(this.hardwareMap.appContext, com.qualcomm.ftcrobotcontroller.R.raw.sonic);
+        //horn = new Musiv(this.hardwareMap.appContext, com.qualcomm.ftcrobotcontroller.R.raw.sonic);
 
         robot = new NormalDrive(.3f,1f,1f,hardwareMap);
 

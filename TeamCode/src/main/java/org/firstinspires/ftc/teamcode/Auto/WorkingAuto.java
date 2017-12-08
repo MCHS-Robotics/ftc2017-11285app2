@@ -55,7 +55,7 @@ public class WorkingAuto extends LinearOpMode {
         jewel.setPosition(0);
         waitForStart();
         ///////////////////////
-
+        
         ///////////////////////
         }
 
