@@ -44,7 +44,7 @@ public class WorkingTele extends LinearOpMode {
     MoveableRobot robot;
     DcMotor liftP;
     Servo liftL,liftR,jewel;
-    final int[] posL = {0,1},posR = {0,1},posJ = {0,1};
+    final float[] posL = {1,.55f},posR = {.415f,1},posJ = {.47f,1};
     boolean stateC = false,dir = false;
     @Override
     public void runOpMode() {
@@ -64,7 +64,6 @@ public class WorkingTele extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()){
             robot.run(gamepad1,gamepad2);
-
             if(!stateC && gamepad2.left_bumper){
                 stateC =true;
                 if(!dir) {
