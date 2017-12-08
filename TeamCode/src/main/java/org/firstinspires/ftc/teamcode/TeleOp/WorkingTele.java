@@ -44,7 +44,7 @@ public class WorkingTele extends LinearOpMode {
     MoveableRobot robot;
     DcMotor liftP;
     Servo liftL,liftR,jewel;
-    final float[] posL = {1,.55f},posR = {.415f,1},posJ = {.47f,1};
+    final float[] posL = {.9f,.55f},posR = {.1f,.5f},posJ = {0,.47f};
     boolean stateC = false,dir = false;
     @Override
     public void runOpMode() {
@@ -75,6 +75,7 @@ public class WorkingTele extends LinearOpMode {
                     liftL.setPosition(posL[0]);
                     liftR.setPosition(posR[0]);
                     jewel.setPosition(posJ[0]);
+                    dir = false;
                 }
             }
             if(stateC && !gamepad2.left_bumper){
