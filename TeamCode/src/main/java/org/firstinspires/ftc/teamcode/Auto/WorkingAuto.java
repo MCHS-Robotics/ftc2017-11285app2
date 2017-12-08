@@ -27,74 +27,49 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.TeleOp;
+package org.firstinspires.ftc.teamcode.Auto;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@TeleOp(name="working tele", group="tele op")
-//@Disabled
-public class WorkingTele extends LinearOpMode {
+@Autonomous(name="Kaleb Auto ", group="Auto")
+public class WorkingAuto extends LinearOpMode {
     MoveableRobot robot;
-    DcMotor liftP;
-    Servo liftL,liftR,jewel;
-    final int[] posL = {0,1},posR = {0,1},posJ = {0,1};
-    boolean stateC = false,dir = false;
+    Servo jewel;
     @Override
     public void runOpMode() {
-        liftP = hardwareMap.dcMotor.get("liftM");
-        liftL = hardwareMap.servo.get("liftL");
-        liftR = hardwareMap.servo.get("liftR");
+        robot = new XOmniDrive(19.9,4,1120,hardwareMap);
         jewel = hardwareMap.servo.get("jewel");
-        liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftL.setPosition(posL[0]);
-        liftR.setPosition(posR[0]);
-        jewel.setPosition(posJ[0]);
-
-        robot = new XOmniDrive(hardwareMap);
-
-        telemetry.addData("setup","initialized");
-        telemetry.update();
+        jewel.setPosition(0);
         waitForStart();
-        while(opModeIsActive()){
-            robot.run(gamepad1,gamepad2);
+        ///////////////////////
 
-            if(!stateC && gamepad2.left_bumper){
-                stateC =true;
-                if(!dir) {
-                    liftL.setPosition(posL[1]);
-                    liftR.setPosition(posR[1]);
-                    jewel.setPosition(posJ[1]);
-                    dir = true;
-                }else{
-                    liftL.setPosition(posL[0]);
-                    liftR.setPosition(posR[0]);
-                    jewel.setPosition(posJ[0]);
-                }
-            }
-            if(stateC && !gamepad2.left_bumper){
-                stateC = false;
-            }
-
-            if(gamepad2.b){
-                liftP.setPower(.2);
-            }else{
-                liftP.setPower(0);
-            }
-
-            if(gamepad2.a){
-                liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            }else{
-                liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
-
-            idle();
+        ///////////////////////
         }
-    }
+
+        public void moveJewel(boolean left){
+            jewel.setPosition(1);
+            sleep(100);
+            if(left){
+                robot.cClockwise(10);
+                robot.clockwise(10);
+            }else{
+                robot.clockwise(10);
+                robot.cClockwise(10);
+            }
+            jewel.setPosition(0);
+            sleep(100);
+        }
 }

@@ -31,12 +31,8 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Accelerator;
-import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
-import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
+import org.firstinspires.ftc.teamcode.Misc.Accelerator;
 
 
 @TeleOp(name="Accelerometer", group="Linear Opmode")
