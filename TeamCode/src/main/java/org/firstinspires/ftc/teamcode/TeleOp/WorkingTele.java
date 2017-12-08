@@ -64,7 +64,12 @@ public class WorkingTele extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()){
             robot.run(gamepad1,gamepad2);
-
+            telemetry.addData("pos","lift L: " + liftL.getPosition());
+            telemetry.addLine();
+            telemetry.addData("pos","lift R: " + liftR.getPosition());
+            telemetry.addLine();
+            telemetry.addData("pos","Jewel: " + jewel.getPosition());
+            telemetry.update();
             if(!stateC && gamepad2.left_bumper){
                 stateC =true;
                 if(!dir) {
