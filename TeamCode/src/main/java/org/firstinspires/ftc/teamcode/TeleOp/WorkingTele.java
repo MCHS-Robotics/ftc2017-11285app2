@@ -44,7 +44,7 @@ public class WorkingTele extends LinearOpMode {
     MoveableRobot robot;
     DcMotor liftP;
     Servo liftL,liftR;
-    final float[] posL = {0f,.32f},posR = {.9f,.6f},posJ = {0,.47f};
+    final float[] posL = {.0f,.32f},posR = {1,.6f},posJ = {0,.47f};
     boolean stateC = false,dir = false;
 
     /**
@@ -62,8 +62,8 @@ public class WorkingTele extends LinearOpMode {
         liftR = hardwareMap.servo.get("liftR");
         //jewel = hardwareMap.servo.get("jewel");
         liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftL.setPosition(posL[0]);
-        liftR.setPosition(posR[0]);
+        liftL.setPosition(posL[1]);
+        liftR.setPosition(posR[1]);
         //jewel.setPosition(posJ[0]);
 
         robot = new XOmniDrive(hardwareMap);
