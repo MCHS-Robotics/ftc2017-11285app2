@@ -48,18 +48,34 @@ import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 public class WorkingAuto extends LinearOpMode {
     MoveableRobot robot;
     Servo jewel;
+    Servo liftL,liftR;
+    final float[] posL = {.9f,.55f},posR = {.2f,.60f},posJ = {0,.47f};
+
+    /**
+     * Runs a basic autonomous
+     */
     @Override
     public void runOpMode() {
         robot = new XOmniDrive(19.9,4,1120,hardwareMap);
         jewel = hardwareMap.servo.get("jewel");
         jewel.setPosition(0);
+
+        liftL = hardwareMap.servo.get("liftL");
+        liftR = hardwareMap.servo.get("liftR");
+        liftL.setPosition(posL[1]);
+        liftR.setPosition(posR[1]);
+
         waitForStart();
         ///////////////////////
         robot.forward(18);
         ///////////////////////
         }
 
-        public void moveJewel(boolean left){
+    /**
+     * Knocks off the left or right jewel
+     * @param left  if true knocks off the left jewel else right
+     */
+    public void moveJewel(boolean left){
             jewel.setPosition(1);
             sleep(100);
             if(left){

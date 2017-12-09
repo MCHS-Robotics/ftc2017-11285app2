@@ -44,8 +44,17 @@ public class WorkingTele extends LinearOpMode {
     MoveableRobot robot;
     DcMotor liftP;
     Servo liftL,liftR;
-    final float[] posL = {.9f,.55f},posR = {.2f,.65f},posJ = {0,.47f};
+    final float[] posL = {.9f,.55f},posR = {.2f,.60f},posJ = {0,.47f};
     boolean stateC = false,dir = false;
+
+    /**
+     * Runs a basic tele-op w/ movement:
+     *  Left joystick: translational movement
+     *  Right joystick: rotational movement
+     *  Left bumper: close/open lift clamp
+     *  B: raises lift
+     *  A: lowers lift
+     */
     @Override
     public void runOpMode() {
         liftP = hardwareMap.dcMotor.get("liftM");
@@ -55,7 +64,7 @@ public class WorkingTele extends LinearOpMode {
         liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftL.setPosition(posL[0]);
         liftR.setPosition(posR[0]);
-   //8jj     jewel.setPosition(posJ[0]);
+        //jewel.setPosition(posJ[0]);
 
         robot = new XOmniDrive(hardwareMap);
 
