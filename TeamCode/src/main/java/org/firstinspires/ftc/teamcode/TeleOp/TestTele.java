@@ -43,7 +43,7 @@ import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 public class TestTele extends LinearOpMode {
     MoveableRobot robot;
     DcMotor liftP;
-    Servo liftL,liftR;
+    Servo liftL,liftR, jewel;
     final float[] posL = {.9f,.55f},posR = {.1f,.5f},posJ = {0,.47f};
     boolean stateC = false,dir = false;
     @Override
@@ -51,9 +51,9 @@ public class TestTele extends LinearOpMode {
         liftP = hardwareMap.dcMotor.get("liftM");
         liftL = hardwareMap.servo.get("liftL");
         liftR = hardwareMap.servo.get("liftR");
-        //jewel = hardwareMap.servo.get("jewel");
+        jewel = hardwareMap.servo.get("jewel");
         liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-   //8jj     jewel.setPosition(posJ[0]);
+        jewel.setPosition(posJ[0]);
 
         robot = new XOmniDrive(hardwareMap);
 
@@ -61,6 +61,16 @@ public class TestTele extends LinearOpMode {
         telemetry.update();
         waitForStart();
         while(opModeIsActive()){
+            if (!stateC && gamepad2.left_bumper) {
+                stateC = true;
+                if (!dir) {
+                    jewel.setPosition(posJ[1]);
+                    dir = true;
+                } else {
+                     jewel.setPosition(posJ[0]);
+                    dir = false;
+                }
+            }
             telemetry.addData("pos","Left: " + liftL.getPosition());
             telemetry.addLine();
             telemetry.addData("pos","Right: " + liftR.getPosition());

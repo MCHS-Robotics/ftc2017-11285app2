@@ -44,7 +44,7 @@ public class WorkingTele extends LinearOpMode {
     MoveableRobot robot;
     DcMotor liftP;
     Servo liftL,liftR;
-    final float[] posL = {.9f,.55f},posR = {.1f,.5f},posJ = {0,.47f};
+    final float[] posL = {.9f,.55f},posR = {.2f,.65f},posJ = {0,.47f};
     boolean stateC = false,dir = false;
     @Override
     public void runOpMode() {
@@ -62,38 +62,40 @@ public class WorkingTele extends LinearOpMode {
         telemetry.addData("setup","initialized");
         telemetry.update();
         waitForStart();
-        while(opModeIsActive()){
-            robot.run(gamepad1,gamepad2);
-            if(!stateC && gamepad2.left_bumper){
-                stateC =true;
-                if(!dir) {
+        while(opModeIsActive()) {
+            robot.run(gamepad1, gamepad2);
+            if (!stateC && gamepad2.left_bumper) {
+                stateC = true;
+                if (!dir) {
                     liftL.setPosition(posL[1]);
                     liftR.setPosition(posR[1]);
-                   // jewel.setPosition(posJ[1]);
+                    // jewel.setPosition(posJ[1]);
                     dir = true;
-                }else{
+                } else {
                     liftL.setPosition(posL[0]);
                     liftR.setPosition(posR[0]);
-                   // jewel.setPosition(posJ[0]);
+                    // jewel.setPosition(posJ[0]);
                     dir = false;
                 }
             }
-            if(stateC && !gamepad2.left_bumper){
+            if (stateC && !gamepad2.left_bumper) {
                 stateC = false;
             }
 
-            if(gamepad2.b){
+            if (gamepad2.b) {
                 liftP.setPower(.2);
-            }else{
+            } else if (gamepad2.a){
+                liftP.setPower(-.2);
+        }else{
                 liftP.setPower(0);
             }
-
+/*
             if(gamepad2.a){
                 liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             }else{
                 liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
-
+*/
             idle();
         }
     }
