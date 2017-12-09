@@ -38,9 +38,9 @@ import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@TeleOp(name="working tele", group="tele op")
+@TeleOp(name="Test tele", group="tele op")
 //@Disabled
-public class WorkingTele extends LinearOpMode {
+public class TestTele extends LinearOpMode {
     MoveableRobot robot;
     DcMotor liftP;
     Servo liftL,liftR;
@@ -53,8 +53,6 @@ public class WorkingTele extends LinearOpMode {
         liftR = hardwareMap.servo.get("liftR");
         //jewel = hardwareMap.servo.get("jewel");
         liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftL.setPosition(posL[0]);
-        liftR.setPosition(posR[0]);
    //8jj     jewel.setPosition(posJ[0]);
 
         robot = new XOmniDrive(hardwareMap);
@@ -63,37 +61,10 @@ public class WorkingTele extends LinearOpMode {
         telemetry.update();
         waitForStart();
         while(opModeIsActive()){
-            robot.run(gamepad1,gamepad2);
-            if(!stateC && gamepad2.left_bumper){
-                stateC =true;
-                if(!dir) {
-                    liftL.setPosition(posL[1]);
-                    liftR.setPosition(posR[1]);
-                   // jewel.setPosition(posJ[1]);
-                    dir = true;
-                }else{
-                    liftL.setPosition(posL[0]);
-                    liftR.setPosition(posR[0]);
-                   // jewel.setPosition(posJ[0]);
-                    dir = false;
-                }
-            }
-            if(stateC && !gamepad2.left_bumper){
-                stateC = false;
-            }
-
-            if(gamepad2.b){
-                liftP.setPower(.2);
-            }else{
-                liftP.setPower(0);
-            }
-
-            if(gamepad2.a){
-                liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            }else{
-                liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
-
+            telemetry.addData("pos","Left: " + liftL.getPosition());
+            telemetry.addLine();
+            telemetry.addData("pos","Right: " + liftR.getPosition());
+            telemetry.update();
             idle();
         }
     }
