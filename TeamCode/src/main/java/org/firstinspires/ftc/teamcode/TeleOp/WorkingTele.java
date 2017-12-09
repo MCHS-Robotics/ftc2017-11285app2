@@ -44,7 +44,7 @@ public class WorkingTele extends LinearOpMode {
     MoveableRobot robot;
     DcMotor liftP;
     Servo liftL,liftR;
-    final float[] posL = {.9f,.55f},posR = {.2f,.60f},posJ = {0,.47f};
+    final float[] posL = {0f,.32f},posR = {.9f,.6f},posJ = {0,.47f};
     boolean stateC = false,dir = false;
 
     /**
