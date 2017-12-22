@@ -33,11 +33,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
-import com.qualcomm.robotcore.hardware.DigitalChannelController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -49,31 +46,35 @@ import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 @Autonomous(name="Kaleb Auto ", group="Auto")
 public class WorkingAuto extends LinearOpMode {
-    static final int LED_CHANNEL = 5;
     MoveableRobot robot;
     Servo jewel;
-    ColorSensor sensorRGB;
-    static DeviceInterfaceModule cdim;
+    Servo liftL,liftR;
+    final float[] posL = {.0f,.32f},posR = {1,.6f},posJ = {0,.47f};
+
+    /**
+     * Runs a basic autonomous
+     */
     @Override
     public void runOpMode() {
         robot = new XOmniDrive(19.9,4,1120,hardwareMap);
         jewel = hardwareMap.servo.get("jewel");
         jewel.setPosition(0);
-        cdim = hardwareMap.deviceInterfaceModule.get("dim");
-        cdim.setDigitalChannelMode(LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
-        sensorRGB = hardwareMap.colorSensor.get("sensor_color");
-        cdim.setDigitalChannelState(LED_CHANNEL, false);
+
+        liftL = hardwareMap.servo.get("liftL");
+        liftR = hardwareMap.servo.get("liftR");
+        liftL.setPosition(posL[1]);
+        liftR.setPosition(posR[1]);
+
         waitForStart();
         ///////////////////////
-
+        robot.forward(18);
         ///////////////////////
         }
 
     /**
-     * knocks of the jewel when the robot is directly in front of it
-     * @param   left    if true turns left otherwise it turns right
+     * Knocks off the left or right jewel
+     * @param left  if true knocks off the left jewel else right
      */
-
     public void moveJewel(boolean left){
             jewel.setPosition(1);
             sleep(100);
@@ -87,23 +88,4 @@ public class WorkingAuto extends LinearOpMode {
             jewel.setPosition(0);
             sleep(100);
         }
-
-    /**
-     * checks to see if color detected by color sensor is more red than blue
-     * @return  boolean that is true if color is more red than blue
-     * */
-    public boolean isRed(){
-        //soundPlayer.play(hardwareMap.appContext,0);
-        cdim.setDigitalChannelState(LED_CHANNEL, true);//turns on the led
-        try {
-            Thread.sleep(100);//sleeps the robot for 100 milliseconds
-        }catch(Exception e){
-
-        }
-        boolean isR = sensorRGB.red()>sensorRGB.blue();//checks if the red detected is more than the blue detected
-        cdim.setDigitalChannelState(LED_CHANNEL, false);//turns off led
-        return isR;//returns boolean
-
-    }
-
 }

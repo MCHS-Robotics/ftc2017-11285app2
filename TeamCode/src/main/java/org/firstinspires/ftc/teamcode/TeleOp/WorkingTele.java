@@ -43,62 +43,68 @@ import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 public class WorkingTele extends LinearOpMode {
     MoveableRobot robot;
     DcMotor liftP;
-    Servo liftL,liftR,jewel;
-    final int[] posL = {0,1},posR = {0,1},posJ = {0,1};
+    Servo liftL,liftR;
+    final float[] posL = {.0f,.32f},posR = {1,.6f},posJ = {0,.47f};
     boolean stateC = false,dir = false;
+
+    /**
+     * Runs a basic tele-op w/ movement:
+     *  Left joystick: translational movement
+     *  Right joystick: rotational movement
+     *  Left bumper: close/open lift clamp
+     *  B: raises lift
+     *  A: lowers lift
+     */
     @Override
     public void runOpMode() {
         liftP = hardwareMap.dcMotor.get("liftM");
         liftL = hardwareMap.servo.get("liftL");
         liftR = hardwareMap.servo.get("liftR");
-        jewel = hardwareMap.servo.get("jewel");
+        //jewel = hardwareMap.servo.get("jewel");
         liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftL.setPosition(posL[0]);
-        liftR.setPosition(posR[0]);
-        jewel.setPosition(posJ[0]);
+        liftL.setPosition(posL[1]);
+        liftR.setPosition(posR[1]);
+        //jewel.setPosition(posJ[0]);
 
         robot = new XOmniDrive(hardwareMap);
 
         telemetry.addData("setup","initialized");
         telemetry.update();
         waitForStart();
-        while(opModeIsActive()){
-            robot.run(gamepad1,gamepad2);
-            telemetry.addData("pos","lift L: " + liftL.getPosition());
-            telemetry.addLine();
-            telemetry.addData("pos","lift R: " + liftR.getPosition());
-            telemetry.addLine();
-            telemetry.addData("pos","Jewel: " + jewel.getPosition());
-            telemetry.update();
-            if(!stateC && gamepad2.left_bumper){
-                stateC =true;
-                if(!dir) {
+        while(opModeIsActive()) {
+            robot.run(gamepad1, gamepad2);
+            if (!stateC && gamepad2.left_bumper) {
+                stateC = true;
+                if (!dir) {
                     liftL.setPosition(posL[1]);
                     liftR.setPosition(posR[1]);
-                    jewel.setPosition(posJ[1]);
+                    // jewel.setPosition(posJ[1]);
                     dir = true;
-                }else{
+                } else {
                     liftL.setPosition(posL[0]);
                     liftR.setPosition(posR[0]);
-                    jewel.setPosition(posJ[0]);
+                    // jewel.setPosition(posJ[0]);
+                    dir = false;
                 }
             }
-            if(stateC && !gamepad2.left_bumper){
+            if (stateC && !gamepad2.left_bumper) {
                 stateC = false;
             }
 
-            if(gamepad2.b){
+            if (gamepad2.b) {
                 liftP.setPower(.2);
-            }else{
+            } else if (gamepad2.a){
+                liftP.setPower(-.2);
+        }else{
                 liftP.setPower(0);
             }
-
+/*
             if(gamepad2.a){
                 liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
             }else{
                 liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
-
+*/
             idle();
         }
     }

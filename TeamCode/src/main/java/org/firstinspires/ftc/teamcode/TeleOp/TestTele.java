@@ -31,33 +31,51 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Misc.Musiv;
-import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
+import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
+import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@TeleOp(name="Normal Wheel Teleop", group="Linear   Opmode")
+@TeleOp(name="Test tele", group="tele op")
 //@Disabled
-public class NormalWheelTele extends LinearOpMode {
-    NormalDrive robot;
-    float forM,backM;
-    Musiv horn;
+public class TestTele extends LinearOpMode {
+    MoveableRobot robot;
+    DcMotor liftP;
+    Servo liftL,liftR, jewel;
+    final float[] posL = {.9f,.55f},posR = {.1f,.5f},posJ = {0,.47f};
+    boolean stateC = false,dir = false;
     @Override
     public void runOpMode() {
-        //horn = new Musiv(this.hardwareMap.appContext, com.qualcomm.ftcrobotcontroller.R.raw.sonic);
+        liftP = hardwareMap.dcMotor.get("liftM");
+        liftL = hardwareMap.servo.get("liftL");
+        liftR = hardwareMap.servo.get("liftR");
+        jewel = hardwareMap.servo.get("jewel");
+        liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        jewel.setPosition(posJ[0]);
 
-        robot = new NormalDrive(.3f,1f,1f,hardwareMap);
+        robot = new XOmniDrive(hardwareMap);
 
         telemetry.addData("setup","initialized");
         telemetry.update();
         waitForStart();
-        horn.prepare();
         while(opModeIsActive()){
-            robot.run(gamepad1,gamepad2);
-            if(gamepad1.a){
-                horn.play();
+            if (!stateC && gamepad2.left_bumper) {
+                stateC = true;
+                if (!dir) {
+                    jewel.setPosition(posJ[1]);
+                    dir = true;
+                } else {
+                     jewel.setPosition(posJ[0]);
+                    dir = false;
+                }
             }
-        idle();
+            telemetry.addData("pos","Left: " + liftL.getPosition());
+            telemetry.addLine();
+            telemetry.addData("pos","Right: " + liftR.getPosition());
+            telemetry.update();
+            idle();
         }
     }
 }
