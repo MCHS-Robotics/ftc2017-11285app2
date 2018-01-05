@@ -4,8 +4,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-public class XOmniDrive implements MoveableRobot{
 
+import static java.lang.Thread.sleep;
+
+public class XOmniDrive implements MoveableRobot{
+    boolean DEBUGGING = false;
     DcMotor FL,FR,BR,BL,liftP;
     float y,x2,x,deadZone,turnPower,movePower;
     Telemetry telemetry;
@@ -130,19 +133,28 @@ public class XOmniDrive implements MoveableRobot{
     public void forward(float inches){
         int pos = (int)(inches * Mstep * Math.sqrt(2) / Cw);
         FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         FL.setTargetPosition(pos);
+        FR.setTargetPosition(pos);
+        BL.setTargetPosition(pos);
+        BR.setTargetPosition(pos);
         FL.setPower(0.3);
         FR.setPower(0.3);
         BL.setPower(0.3);
         BR.setPower(0.3);
-        while(FL.isBusy()){
-        
+        while(FL.isBusy() && FR.isBusy() && BL.isBusy() && BR.isBusy()){
+            if(DEBUGGING)displayStats();
         }
         FL.setPower(0);
         FR.setPower(0);
         BL.setPower(0);
         BR.setPower(0);
         FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
        /**
@@ -152,19 +164,28 @@ public class XOmniDrive implements MoveableRobot{
     public void backward(float inches){
         int pos = -(int)(inches * Mstep * Math.sqrt(2) / Cw);
         FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         FL.setTargetPosition(pos);
+        FR.setTargetPosition(pos);
+        BL.setTargetPosition(pos);
+        BR.setTargetPosition(pos);
         FL.setPower(0.3);
-        FR.setPower(-0.3);
-        BL.setPower(-0.3);
-        BR.setPower(-0.3);
-        while(FL.isBusy()){
-          
+        FR.setPower(0.3);
+        BL.setPower(0.3);
+        BR.setPower(0.3);
+        while(FL.isBusy() && FR.isBusy() && BL.isBusy() && BR.isBusy()){
+            if(DEBUGGING)displayStats();
         }
         FL.setPower(0);
         FR.setPower(0);
         BL.setPower(0);
         BR.setPower(0);
         FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
         /**
@@ -174,19 +195,28 @@ public class XOmniDrive implements MoveableRobot{
     public void left(float inches) {
         int pos = (int)(inches * Mstep * Math.sqrt(2) / Cw);
         FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        FL.setTargetPosition(pos);
+        FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        FL.setTargetPosition(-pos);
+        FR.setTargetPosition(pos);
+        BL.setTargetPosition(pos);
+        BR.setTargetPosition(-pos);
         FL.setPower(0.3);
-        FR.setPower(-0.3);
-        BL.setPower(-0.3);
+        FR.setPower(0.3);
+        BL.setPower(0.3);
         BR.setPower(0.3);
-        while(FL.isBusy()){
-       
+        while(FL.isBusy() && FR.isBusy() && BL.isBusy() && BR.isBusy()){
+            if(DEBUGGING)displayStats();
         }
         FL.setPower(0);
         FR.setPower(0);
         BL.setPower(0);
         BR.setPower(0);
         FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
           /**
@@ -196,43 +226,60 @@ public class XOmniDrive implements MoveableRobot{
     public void right(float inches){
         int pos = -(int)(inches * Mstep * Math.sqrt(2) / Cw);
         FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         FL.setTargetPosition(pos);
+        FR.setTargetPosition(-pos);
+        BL.setTargetPosition(-pos);
+        BR.setTargetPosition(pos);
         FL.setPower(0.3);
         FR.setPower(0.3);
         BL.setPower(0.3);
-        BR.setPower(-0.3);
-        while(FL.isBusy()){
-        
+        BR.setPower(0.3);
+        while(FL.isBusy() && FR.isBusy() && BL.isBusy() && BR.isBusy()){
+            if(DEBUGGING)displayStats();
         }
         FL.setPower(0);
         FR.setPower(0);
         BL.setPower(0);
         BR.setPower(0);
         FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
        /**
     * turns the robot clockwise a variable amount of degrees
     * @param    degrees the amount of degrees the robot turns
     */
-    public void clockwise(int degrees){
-        int pos = (int)(degrees * Cr * Mstep / 360 / Cw);
+    public void clockwise(int degrees) {
+        int pos = (int) (degrees * Cr * Mstep / 360 / Cw);
         FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         FL.setTargetPosition(pos);
+        FR.setTargetPosition(-pos);
+        BL.setTargetPosition(pos);
+        BR.setTargetPosition(-pos);
         FL.setPower(0.3);
-        FR.setPower(-0.3);
+        FR.setPower(0.3);
         BL.setPower(0.3);
-        BR.setPower(-0.3);
-        while(FL.isBusy()){
-      
+        BR.setPower(0.3);
+        while (FL.isBusy() && FR.isBusy() && BL.isBusy() && BR.isBusy()) {
+            if(DEBUGGING)displayStats();
         }
         FL.setPower(0);
         FR.setPower(0);
         BL.setPower(0);
         BR.setPower(0);
         FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
-
        /**
     * turns the robot counter clockwise a variable amount of degrees
     * @param    degrees the amount of degrees the robot turns
@@ -240,19 +287,28 @@ public class XOmniDrive implements MoveableRobot{
     public void cClockwise(int degrees){
         int pos = -(int)(degrees * Cr * Mstep / 360 / Cw);
         FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        FL.setTargetPosition(pos);
+        FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        FL.setTargetPosition(-pos);
+        FR.setTargetPosition(pos);
+        BL.setTargetPosition(-pos);
+        BR.setTargetPosition(pos);
         FL.setPower(0.3);
         FR.setPower(0.3);
-        BL.setPower(-0.3);
+        BL.setPower(0.3);
         BR.setPower(0.3);
-        while(FL.isBusy()){
-       
+        while(FL.isBusy() && FR.isBusy() && BL.isBusy() && BR.isBusy()){
+            if(DEBUGGING)displayStats();
         }
         FL.setPower(0);
         FR.setPower(0);
         BL.setPower(0);
         BR.setPower(0);
         FL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
     
     /**
@@ -276,54 +332,132 @@ public class XOmniDrive implements MoveableRobot{
         }catch(Exception e){}
         }
 
-    //Moves the robot forward using time
-     //* @param milliseconds
-     //*/
+    /**
+     * Moves the robot forward for some milliseconds
+     * @param milliseconds The time the robot moves
+     */
     public void ForwardTime(int milliseconds){
         FL.setPower(0.5);
         FR.setPower(0.5);
         BR.setPower(0.5);
         BL.setPower(0.5);
-
+        try {
+            wait(milliseconds);
+        }catch (Exception e){}
+        FL.setPower(0);
+        FR.setPower(0);
+        BL.setPower(0);
+        BR.setPower(0);
      }
 
-     //Moves the robot backwards using time
+    /**
+     * Moves the robot backward for some milliseconds
+     * @param milliseconds The time the robot moves
+     */
      public void BackwardTime(int milliseconds){
          FL.setPower(-0.5);
          FR.setPower(-0.5);
          BR.setPower(-0.5);
          BL.setPower(-0.5);
+         try {
+             wait(milliseconds);
+         }catch (Exception e){}
+         FL.setPower(0);
+         FR.setPower(0);
+         BL.setPower(0);
+         BR.setPower(0);
      }
 
-     //moves the robot to the left using time
+    /**
+     * Moves the robot left for some milliseconds
+     * @param milliseconds The time the robot moves
+     */
      public void LeftTime(int milliseconds){
          FL.setPower(-0.5);
          FR.setPower(0.5);
          BR.setPower(-0.5);
          BL.setPower(0.5);
+         try {
+             wait(milliseconds);
+         }catch (Exception e){}
+         FL.setPower(0);
+         FR.setPower(0);
+         BL.setPower(0);
+         BR.setPower(0);
      }
 
-     //moves the robot to the right using time
+    /**
+     * Moves the robot right for some milliseconds
+     * @param milliseconds The time the robot moves
+     */
      public void RightTime(int milliseconds){
          FL.setPower(0.5);
          FR.setPower(-0.5);
          BR.setPower(0.5);
          BL.setPower(-0.5);
+         try {
+             wait(milliseconds);
+         }catch (Exception e){}
+         FL.setPower(0);
+         FR.setPower(0);
+         BL.setPower(0);
+         BR.setPower(0);
      }
-     //Turns the robot clockwise
+
+    /**
+     * turns the robot clockwise for some milliseconds
+     * @param milliseconds The time the robot turns
+     */
      public void ClockwiseTime(int milliseconds)
      {
          FL.setPower(0.5);
          FR.setPower(-0.5);
          BR.setPower(-0.5);
          BL.setPower(0.5);
+         try {
+             wait(milliseconds);
+         }catch (Exception e){}
+         FL.setPower(0);
+         FR.setPower(0);
+         BL.setPower(0);
+         BR.setPower(0);
      }
-     //Turns the robot counter clockwise using time
+
+    /**
+     * turns the robot counter clockwise for some milliseconds
+     * @param milliseconds The time the robot turns
+     */
      public void CounterClockwiseTime(int milliseconds){
          FL.setPower(-0.5);
          FR.setPower(0.5);
          BR.setPower(0.5);
          BL.setPower(-0.5);
+         try {
+             wait(milliseconds);
+         }catch (Exception e){}
+         FL.setPower(0);
+         FR.setPower(0);
+         BL.setPower(0);
+         BR.setPower(0);
+     }
+
+     private void displayStats(){
+         telemetry.addData("FL encoder","Curr: " + FL.getCurrentPosition() + "  Tar: " + FL.getTargetPosition());
+         telemetry.addLine();
+         telemetry.addData("FR encoder","Curr: " + FR.getCurrentPosition() + "  Tar: " + FR.getTargetPosition());
+         telemetry.addLine();
+         telemetry.addData("BL encoder","Curr: " + BL.getCurrentPosition() + "  Tar: " + BL.getTargetPosition());
+         telemetry.addLine();
+         telemetry.addData("BR encoder","Curr: " + BR.getCurrentPosition() + "  Tar: " + BR.getTargetPosition());
+         telemetry.addLine();
+         telemetry.addData("FL motor power",FL.getPower());
+         telemetry.addLine();
+         telemetry.addData("FR motor power",FR.getPower());
+         telemetry.addLine();
+         telemetry.addData("BL motor power",BL.getPower());
+         telemetry.addLine();
+         telemetry.addData("BR motor power",BR.getPower());
+         telemetry.update();
      }
 
 }

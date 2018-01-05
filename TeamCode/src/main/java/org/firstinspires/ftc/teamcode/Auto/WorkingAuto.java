@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -49,6 +50,8 @@ public class WorkingAuto extends LinearOpMode {
     MoveableRobot robot;
     Servo jewel;
     Servo liftL,liftR;
+    ColorSensor colorSensor;
+
     final float[] posL = {.0f,.32f},posR = {1,.6f},posJ = {0,.47f};
 
     /**
@@ -56,6 +59,7 @@ public class WorkingAuto extends LinearOpMode {
      */
     @Override
     public void runOpMode() {
+        colorSensor = hardwareMap.colorSensor.get("color");
         robot = new XOmniDrive(19.9,4,1120,hardwareMap);
         jewel = hardwareMap.servo.get("jewel");
         jewel.setPosition(0);
@@ -64,10 +68,11 @@ public class WorkingAuto extends LinearOpMode {
         liftR = hardwareMap.servo.get("liftR");
         liftL.setPosition(posL[1]);
         liftR.setPosition(posR[1]);
-
+        colorSensor.enableLed(true);
         waitForStart();
         ///////////////////////
-        robot.forward(18);
+        while(opModeIsActive())
+      colorStats();
         ///////////////////////
         }
 
@@ -87,5 +92,29 @@ public class WorkingAuto extends LinearOpMode {
             }
             jewel.setPosition(0);
             sleep(100);
-        }
+    }
+
+    /**
+     * returns RGB color for colorSensor
+     */
+    public void colorStats(){
+        telemetry.addData("Blue:",colorSensor.blue());
+        telemetry.addLine();
+        telemetry.addData("Green:",colorSensor.green());
+        telemetry.addLine();
+        telemetry.addData("Red:",colorSensor.red());
+        telemetry.update();
+    }
+
+    /**
+     * returns if the object is red
+     * @return true if object is more red then blue
+     */
+    public boolean isRed(){
+        colorSensor.enableLed(true);
+        boolean isRed = colorSensor.red() > colorSensor.blue();
+        colorSensor.enableLed(false);
+        return isRed;
+    }
+
 }
