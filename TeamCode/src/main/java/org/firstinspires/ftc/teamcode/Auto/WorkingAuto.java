@@ -71,7 +71,8 @@ public class WorkingAuto extends LinearOpMode {
         colorSensor.enableLed(true);
         waitForStart();
         ///////////////////////
-
+        while(opModeIsActive())
+      colorStats();
         ///////////////////////
         }
 
