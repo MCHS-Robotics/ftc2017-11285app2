@@ -73,6 +73,7 @@ public class WorkingTele extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()) {
             robot.run(gamepad1, gamepad2);
+            /*
             if (!stateC && gamepad2.left_bumper) {
                 stateC = true;
                 if (!dir) {
@@ -87,6 +88,16 @@ public class WorkingTele extends LinearOpMode {
                     dir = false;
                 }
             }
+            */
+            if(gamepad2.left_trigger > .3){
+             liftL.setPosition(liftL.getPosition()+.01);
+             liftR.setPosition(liftR.getPosition()-.01);
+            }
+            if(gamepad2.right_trigger > .3){
+                liftL.setPosition(liftL.getPosition()-.01);
+                liftR.setPosition(liftR.getPosition()+.01);
+            }
+
             if (stateC && !gamepad2.left_bumper) {
                 stateC = false;
             }
