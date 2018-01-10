@@ -91,23 +91,41 @@ public class VuMarkKalebTest extends LinearOpMode {
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
-        VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-        VuforiaTrackable[] relicTemplate = {relicTrackables.get(0), relicTrackables.get(1), relicTrackables.get(2)};
-        relicTemplate[0].setName("0"); // can help in debugging; otherwise not necessary
-        relicTemplate[1].setName("1");
-        relicTemplate[2].setName("2");
+        VuforiaTrackables relicTrackable = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
+        //VuforiaTrackable[] relicTemplate = {relicTrackables.get(0), relicTrackables.get(1), relicTrackables.get(2)};
+        //relicTemplate[0].setName("0"); // can help in debugging; otherwise not necessary
+        //relicTemplate[1].setName("1");
+        //relicTemplate[2].setName("2");
 
         telemetry.addData(">", "Press Play to start");
         telemetry.update();
         waitForStart();
 
-        relicTrackables.activate();
+        relicTrackable.activate();
         while (opModeIsActive()) {
 
-            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate[0]);
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTrackable.get(0));
+            if (vuMark == RelicRecoveryVuMark.CENTER) {
+                telemetry.addData("VueMark", "Center Visible");
+            }else{
 
+                telemetry.addData("VueMark","Center not Visible");
             }
+            if (vuMark == RelicRecoveryVuMark.LEFT) {
+                telemetry.addLine();
+                telemetry.addData("VueMark", "Left Visible");
+            }else{
+                telemetry.addLine();
+                telemetry.addData("VueMark","Left not Visible");
+            }
+            if (vuMark == RelicRecoveryVuMark.RIGHT) {
+                telemetry.addLine();
+                telemetry.addData("VueMark", "Right Visible");
+            }else{
+                telemetry.addLine();
+                telemetry.addData("VueMark","Right not Visible");
+            }
+            telemetry.update();
         }
 
     }
