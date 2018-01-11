@@ -27,75 +27,65 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.Misc;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.Misc.ColorSensorIsDaWae;
-import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@Autonomous(name="Kaleb Auto ", group="Auto")
-public class WorkingAuto extends LinearOpMode {
-    MoveableRobot robot;
-    Servo jewel;
-    Servo liftL,liftR;
-    ColorSensorIsDaWae colorSensor;
-    VuforiaIsDaWae vueforia;
+public class ColorSensorIsDaWae {
 
-    final float[] posL = {.0f,.32f},posR = {1,.6f},posJ = {0,.47f};
+    ColorSensor colorSensor;
 
     /**
-     * Runs a basic autonomous
+     * creates a ColorSensorIsDaWae object
+     * @param hardwareMap hardware map on the phone
+     * @param deviceName the name the color sensor is mapped to
      */
-    @Override
-    public void runOpMode() {
-        vueforia = new VuforiaIsDaWae(hardwareMap);
-        colorSensor = new ColorSensorIsDaWae(hardwareMap,"color");
-        robot = new XOmniDrive(19.9,4,1120,hardwareMap);
-        jewel = hardwareMap.servo.get("jewel");
-        jewel.setPosition(0);
-
-        liftL = hardwareMap.servo.get("liftL");
-        liftR = hardwareMap.servo.get("liftR");
-        liftL.setPosition(posL[1]);
-        liftR.setPosition(posR[1]);
-        colorSensor.on();
-        waitForStart();
-        ///////////////////////
-        while(opModeIsActive())
-      colorSensor.colorStats(telemetry);
-        ///////////////////////
-        }
+    public ColorSensorIsDaWae(HardwareMap hardwareMap,String deviceName) {
+        colorSensor = hardwareMap.colorSensor.get(deviceName);
+    }
 
     /**
-     * Knocks off the left or right jewel
-     * @param left  if true knocks off the left jewel else right
+     * turns led on
      */
-    public void moveJewel(boolean left){
-            jewel.setPosition(1);
-            sleep(100);
-            if(left){
-                robot.cClockwise(10);
-                robot.clockwise(10);
-            }else{
-                robot.clockwise(10);
-                robot.cClockwise(10);
-            }
-            jewel.setPosition(0);
-            sleep(100);
+    public void on(){
+        colorSensor.enableLed(true);
+    }
+
+    /**
+     * turns led off
+     */
+    public void off(){
+        colorSensor.enableLed(false);
+    }
+
+    /**
+     * returns RGB color for colorSensor
+     */
+    public void colorStats(Telemetry telemetry){
+        telemetry.addData("Blue:",colorSensor.blue());
+        telemetry.addLine();
+        telemetry.addData("Green:",colorSensor.green());
+        telemetry.addLine();
+        telemetry.addData("Red:",colorSensor.red());
+        telemetry.update();
+    }
+
+    /**
+     * returns if the object is red
+     * @return true if object is more red then blue
+     */
+    public boolean isRed(){
+        boolean isRed = colorSensor.red() > colorSensor.blue();
+        return isRed;
     }
 
 }

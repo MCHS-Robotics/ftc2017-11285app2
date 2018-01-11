@@ -75,7 +75,7 @@ public class JayAutoQuick extends LinearOpMode {
         waitForStart();
     }
     public void moveForward() {
-        
+
     }
 
     }

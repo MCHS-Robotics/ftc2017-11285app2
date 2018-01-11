@@ -34,16 +34,23 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
 import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
 
 
 @Autonomous(name="Normal Wheel Auto ", group="Auto")
 public class NormalWheelAuto extends LinearOpMode {
     NormalDrive robot;
+    VuforiaIsDaWae vuforia;
     @Override
     public void runOpMode() {
+        vuforia = new VuforiaIsDaWae(hardwareMap);
         robot = new NormalDrive(hardwareMap);
         waitForStart();
+        vuforia.activate();
+        telemetry.addData("Vue",vuforia.getPos());
+        telemetry.update();
         robot.forward(12);
+        vuforia.deactivate();
         }
 }
