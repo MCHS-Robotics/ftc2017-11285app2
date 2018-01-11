@@ -89,8 +89,8 @@ public class VuMarkKalebTest extends LinearOpMode {
 
 
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.cameraMonitorFeedback= VuforiaLocalizer.Parameters.CameraMonitorFeedback.BUILDINGS;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
-
         VuforiaTrackables relicTrackable = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         //VuforiaTrackable[] relicTemplate = {relicTrackables.get(0), relicTrackables.get(1), relicTrackables.get(2)};
         //relicTemplate[0].setName("0"); // can help in debugging; otherwise not necessary

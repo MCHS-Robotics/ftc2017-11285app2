@@ -46,10 +46,15 @@ public class VuforiaIsDaWae{
     VuforiaLocalizer vuforia;
     VuforiaTrackables relicTrackable;
 
+    /**
+     * Creates a VuforiaIsDaWae object
+     * @param hardwareMap The hardware map of the robot
+     */
    public VuforiaIsDaWae(HardwareMap hardwareMap) {
 
        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+       parameters.cameraMonitorFeedback= VuforiaLocalizer.Parameters.CameraMonitorFeedback.BUILDINGS;
 
 
        parameters.vuforiaLicenseKey = "Acbhfjv/////AAAAGQwVGIAmv0V3nNH7nrtPGJVSuirk278Uo+j+394hRfZGLNmucewzhlA4ux8ZUQz0OpL1mJuPW+lKbjippfmpGiiXsvpnm2p6prlsNHzZNthjThZyFArOkXDkjL5bYlVT3zlo3oc+XNg/W4rBdXHeBpw6OgO1a7D0xhGHkqaihUWqeESvWtcH+uSJXha/umtRGu0DIPRW0n4a3Z0cjbNzhicHvrGOWuwuVhyua1IcrOqed3/bTdts+JhuG3TakwFBb1GpIkWXNziiorUUXVstPVNVrty3AnesNZ11gsJyHVu3YCKi//itjkqr/6xmINr4LDrwdf1Pg2e9L9iT9qtFWjrrnEQYGzxgpnrj0+PvzWWw";
@@ -61,9 +66,19 @@ public class VuforiaIsDaWae{
        relicTrackable = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
    }
 
+    /**
+     * Activates the relicTrackables for vueforia
+     */
    public void activate(){
        relicTrackable.activate();
    }
+
+    /**
+     * Deactivates the relicTrackables for vueforia
+     */
+    public void deactivate(){
+        relicTrackable.deactivate();
+    }
 
     /**
      * Gets which template is up
