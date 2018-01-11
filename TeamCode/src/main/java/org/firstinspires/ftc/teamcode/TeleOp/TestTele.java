@@ -27,31 +27,55 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
-
-import android.media.MediaPlayer;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
+import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@TeleOp(name="Sounds", group="Linear Opmode")
+@TeleOp(name="Test tele", group="tele op")
 //@Disabled
-public class Musiv extends LinearOpMode {
-    MediaPlayer sounds;
+public class TestTele extends LinearOpMode {
+    MoveableRobot robot;
+    DcMotor liftP;
+    Servo liftL,liftR, jewel;
+    final float[] posL = {.9f,.55f},posR = {.1f,.5f},posJ = {0,.47f};
+    boolean stateC = false,dir = false;
     @Override
     public void runOpMode() {
-        sounds = MediaPlayer.create(this.hardwareMap.appContext,R.raw.sound);
+        liftP = hardwareMap.dcMotor.get("liftM");
+        liftL = hardwareMap.servo.get("liftL");
+        liftR = hardwareMap.servo.get("liftR");
+        jewel = hardwareMap.servo.get("jewel");
+        liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        jewel.setPosition(posJ[0]);
+
+        robot = new XOmniDrive(hardwareMap);
+
+        telemetry.addData("setup","initialized");
+        telemetry.update();
         waitForStart();
-        try{
-            sounds.prepare();
-        }catch(Exception e){}
         while(opModeIsActive()){
-            sounds.start();
-            sleep(1000);
-        idle();
+            if (!stateC && gamepad2.left_bumper) {
+                stateC = true;
+                if (!dir) {
+                    jewel.setPosition(posJ[1]);
+                    dir = true;
+                } else {
+                     jewel.setPosition(posJ[0]);
+                    dir = false;
+                }
+            }
+            telemetry.addData("pos","Left: " + liftL.getPosition());
+            telemetry.addLine();
+            telemetry.addData("pos","Right: " + liftR.getPosition());
+            telemetry.update();
+            idle();
         }
-        sounds.stop();
     }
 }

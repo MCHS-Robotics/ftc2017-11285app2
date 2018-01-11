@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -38,44 +38,31 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
-
-@TeleOp(name="JayAutonomous", group="Linear Opmode")
+@TeleOp(name="Basic: Linear OpMode ", group="Linear Opmode ")
 //@Disabled
-public class JayAutoQuick extends LinearOpMode {
-
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    DcMotor fl,fr,bl,br;
-
+public class TestOpMode extends LinearOpMode {
+    DcMotor FL,FR,BR,BL;
+    float x,y,x2;
     @Override
     public void runOpMode() {
-        fl = hardwareMap.dcMotor.get("fl");
-        fr = hardwareMap.dcMotor.get("fr");
-        bl = hardwareMap.dcMotor.get("bl");
-        br = hardwareMap.dcMotor.get("br");
-        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fr.setDirection(DcMotorSimple.Direction.REVERSE);
-        br.setDirection(DcMotorSimple.Direction.REVERSE);
+        FL = hardwareMap.dcMotor.get("fl");
+        FR = hardwareMap.dcMotor.get("fr");
+        BL = hardwareMap.dcMotor.get("bl");
+        BR = hardwareMap.dcMotor.get("br");
+        FR.setDirection(DcMotor.Direction.REVERSE);
+        BR.setDirection(DcMotor.Direction.REVERSE);
+        telemetry.addData("setup","initialized");
+        telemetry.update();
         waitForStart();
+        while(opModeIsActive()){
+            x = gamepad1.left_stick_x;
+            y = -gamepad1.left_stick_y;
+            x2 = gamepad1.right_stick_x;
+            FL.setPower(x+y+x2);
+            FR.setPower(-x+y-x2);
+            BL.setPower(-x+y+x2);
+            BR.setPower(x+y-x2);
+        idle();
+        }
     }
-    public void moveForward() {
-
-    }
-
-    }
-
+}
