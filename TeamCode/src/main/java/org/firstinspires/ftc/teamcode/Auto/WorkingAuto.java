@@ -41,6 +41,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Misc.ColorSensorIsDaWae;
+import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
 import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
@@ -50,7 +52,8 @@ public class WorkingAuto extends LinearOpMode {
     MoveableRobot robot;
     Servo jewel;
     Servo liftL,liftR;
-    ColorSensor colorSensor;
+    ColorSensorIsDaWae colorSensor;
+    VuforiaIsDaWae vueforia;
 
     final float[] posL = {.0f,.32f},posR = {1,.6f},posJ = {0,.47f};
 
@@ -59,7 +62,8 @@ public class WorkingAuto extends LinearOpMode {
      */
     @Override
     public void runOpMode() {
-        colorSensor = hardwareMap.colorSensor.get("color");
+        vueforia = new VuforiaIsDaWae(hardwareMap);
+        colorSensor = new ColorSensorIsDaWae(hardwareMap,"color");
         robot = new XOmniDrive(19.9,4,1120,hardwareMap);
         jewel = hardwareMap.servo.get("jewel");
         jewel.setPosition(0);
@@ -68,11 +72,11 @@ public class WorkingAuto extends LinearOpMode {
         liftR = hardwareMap.servo.get("liftR");
         liftL.setPosition(posL[1]);
         liftR.setPosition(posR[1]);
-        colorSensor.enableLed(true);
+        colorSensor.on();
         waitForStart();
         ///////////////////////
         while(opModeIsActive())
-      colorStats();
+      colorSensor.colorStats(telemetry);
         ///////////////////////
         }
 
@@ -92,29 +96,6 @@ public class WorkingAuto extends LinearOpMode {
             }
             jewel.setPosition(0);
             sleep(100);
-    }
-
-    /**
-     * returns RGB color for colorSensor
-     */
-    public void colorStats(){
-        telemetry.addData("Blue:",colorSensor.blue());
-        telemetry.addLine();
-        telemetry.addData("Green:",colorSensor.green());
-        telemetry.addLine();
-        telemetry.addData("Red:",colorSensor.red());
-        telemetry.update();
-    }
-
-    /**
-     * returns if the object is red
-     * @return true if object is more red then blue
-     */
-    public boolean isRed(){
-        colorSensor.enableLed(true);
-        boolean isRed = colorSensor.red() > colorSensor.blue();
-        colorSensor.enableLed(false);
-        return isRed;
     }
 
 }
