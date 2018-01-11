@@ -27,30 +27,65 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.Misc;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
-import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
+import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@Autonomous(name="Normal Wheel Auto ", group="Auto")
-public class NormalWheelAuto extends LinearOpMode {
-    NormalDrive robot;
-    VuforiaIsDaWae vuforia;
-    @Override
-    public void runOpMode() {
-        vuforia = new VuforiaIsDaWae(hardwareMap);
-        robot = new NormalDrive(hardwareMap);
-        waitForStart();
-        vuforia.activate();
-        telemetry.addData("Vue",vuforia.getPos());
+public class ColorSensorIsDaWae {
+
+    ColorSensor colorSensor;
+
+    /**
+     * creates a ColorSensorIsDaWae object
+     * @param hardwareMap hardware map on the phone
+     * @param deviceName the name the color sensor is mapped to
+     */
+    public ColorSensorIsDaWae(HardwareMap hardwareMap,String deviceName) {
+        colorSensor = hardwareMap.colorSensor.get(deviceName);
+    }
+
+    /**
+     * turns led on
+     */
+    public void on(){
+        colorSensor.enableLed(true);
+    }
+
+    /**
+     * turns led off
+     */
+    public void off(){
+        colorSensor.enableLed(false);
+    }
+
+    /**
+     * returns RGB color for colorSensor
+     */
+    public void colorStats(Telemetry telemetry){
+        telemetry.addData("Blue:",colorSensor.blue());
+        telemetry.addLine();
+        telemetry.addData("Green:",colorSensor.green());
+        telemetry.addLine();
+        telemetry.addData("Red:",colorSensor.red());
         telemetry.update();
-        robot.forward(12);
-        vuforia.deactivate();
-        }
+    }
+
+    /**
+     * returns if the object is red
+     * @return true if object is more red then blue
+     */
+    public boolean isRed(){
+        boolean isRed = colorSensor.red() > colorSensor.blue();
+        return isRed;
+    }
+
 }
