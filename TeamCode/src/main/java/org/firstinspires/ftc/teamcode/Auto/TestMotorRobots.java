@@ -27,38 +27,33 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.TeleOp;
+package org.firstinspires.ftc.teamcode.Auto;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Misc.Musiv;
-import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
+import org.firstinspires.ftc.teamcode.Misc.ColorSensorIsDaWae;
+import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
+import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
+import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@TeleOp(name="Normal Wheel Teleop", group="Linear   Opmode")
-@Disabled
-public class NormalWheelTele extends LinearOpMode {
-    NormalDrive robot;
-    float forM,backM;
-    Musiv horn;
+@Autonomous(name="Test Motors", group="Auto")
+public class TestMotorRobots extends LinearOpMode {
+    MoveableRobot robot;
+
+
+    /**
+     * Runs a basic autonomous
+     */
     @Override
     public void runOpMode() {
-        //horn = new Musiv(this.hardwareMap.appContext, com.qualcomm.ftcrobotcontroller.R.raw.sonic);
-
-        robot = new NormalDrive(.3f,1f,1f,hardwareMap);
-
-        telemetry.addData("setup","initialized");
-        telemetry.update();
+        robot = new XOmniDrive(19.9,4,1120,hardwareMap);
         waitForStart();
-        horn.prepare();
-        while(opModeIsActive()){
-            robot.run(gamepad1,gamepad2);
-            if(gamepad1.a){
-                horn.play();
-            }
-        idle();
+        ///////////////////////
+        robot.testDrive(3);
+        ///////////////////////
         }
-    }
+
 }

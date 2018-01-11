@@ -67,6 +67,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  */
 
 @Autonomous(name="Kaleb VueMark Test", group ="Concept")
+@Disabled
 public class VuMarkKalebTest extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";

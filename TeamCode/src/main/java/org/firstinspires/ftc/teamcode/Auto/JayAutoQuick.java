@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @Autonomous(name="JayAutonomous ", group="Linear  Opmode")
-//@Disabled
+@Disabled
 public class JayAutoQuick extends LinearOpMode {
 
     // Declare OpMode members.

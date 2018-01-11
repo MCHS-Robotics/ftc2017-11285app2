@@ -38,7 +38,7 @@ import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
 import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
 
 
-@Autonomous(name="Normal Wheel Auto ", group="Auto")
+@Autonomous(name="Basic Auto", group="Auto")
 public class NormalWheelAuto extends LinearOpMode {
     NormalDrive robot;
     VuforiaIsDaWae vuforia;

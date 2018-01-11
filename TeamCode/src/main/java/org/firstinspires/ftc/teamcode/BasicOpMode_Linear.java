@@ -27,56 +27,69 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.TeleOp;
+package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
-import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="Test tele", group="tele op")
-@Disabled
-public class TestTele extends LinearOpMode {
-    MoveableRobot robot;
-    DcMotor liftP;
-    Servo liftL,liftR, jewel;
-    final float[] posL = {.9f,.55f},posR = {.1f,.5f},posJ = {0,.47f};
-    boolean stateC = false,dir = false;
+/**
+ * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
+ * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
+ * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
+ * class is instantiated on the Robot Controller and executed.
+ *
+ * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
+ * It includes all the skeletal structure that all linear OpModes contain.
+ *
+ * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
+ * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
+ */
+
+@Autonomous(name="Test Dem Moters", group="Auto")
+public class BasicOpMode_Linear extends LinearOpMode {
+
+    // Declare OpMode members.
+    private ElapsedTime runtime = new ElapsedTime();
+    DcMotor FL,FR,BL,BR;
+
     @Override
     public void runOpMode() {
-        liftP = hardwareMap.dcMotor.get("liftM");
-        liftL = hardwareMap.servo.get("liftL");
-        liftR = hardwareMap.servo.get("liftR");
-        jewel = hardwareMap.servo.get("jewel");
-        liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        jewel.setPosition(posJ[0]);
-
-        robot = new XOmniDrive(hardwareMap);
-
-        telemetry.addData("setup","initialized");
+        telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+      FL = hardwareMap.dcMotor.get("fl");
+        FR = hardwareMap.dcMotor.get("fr");
+        BL = hardwareMap.dcMotor.get("bl");
+        BR = hardwareMap.dcMotor.get("br");
+        // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        while(opModeIsActive()){
-            if (!stateC && gamepad2.left_bumper) {
-                stateC = true;
-                if (!dir) {
-                    jewel.setPosition(posJ[1]);
-                    dir = true;
-                } else {
-                     jewel.setPosition(posJ[0]);
-                    dir = false;
-                }
-            }
-            telemetry.addData("pos","Left: " + liftL.getPosition());
-            telemetry.addLine();
-            telemetry.addData("pos","Right: " + liftR.getPosition());
-            telemetry.update();
-            idle();
-        }
+        runtime.reset();
+
+        // run until the end of the match (driver presses STOP)
+
+
+                FL.setPower(0.5);
+                sleep(1000);
+                FL.setPower(0);
+
+                FR.setPower(0.5);
+                sleep(1000);
+                FR.setPower(0);
+
+                BL.setPower(0.5);
+                sleep(1000);
+                BL.setPower(0);
+
+                BR.setPower(0.5);
+                sleep(1000);
+                BR.setPower(0);
+
+
     }
 }

@@ -47,7 +47,7 @@ import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@Autonomous(name="Kaleb Auto ", group="Auto")
+@Autonomous(name="Current Working Auto", group="Auto")
 public class WorkingAuto extends LinearOpMode {
     MoveableRobot robot;
     Servo jewel;

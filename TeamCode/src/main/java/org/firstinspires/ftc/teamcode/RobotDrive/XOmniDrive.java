@@ -315,23 +315,25 @@ public class XOmniDrive implements MoveableRobot{
     * tests robot to make sure it is in working order by rotating each wheel forward for a variable amt of time
     * @param    seconds time spent moving motors
     */
-    public void testDrive(int seconds){
+    public void testDrive(int seconds) {
         try {
             FL.setPower(0.5);
-            wait(seconds * 1000);
+            sleep(1000);
             FL.setPower(0);
-            FR.setPower(0.5);
-            wait(seconds * 1000);
-            FR.setPower(0);
-            BR.setPower(0.5);
-            wait(seconds * 1000);
-            BR.setPower(0);
-            BL.setPower(0.5);
-            wait(seconds * 1000);
-            BL.setPower(0);
-        }catch(Exception e){}
-        }
 
+            FR.setPower(0.5);
+            sleep(1000);
+            FR.setPower(0);
+
+            BL.setPower(0.5);
+            sleep(1000);
+            BL.setPower(0);
+
+            BR.setPower(0.5);
+            sleep(1000);
+            BR.setPower(0);
+        }catch (Exception e){}
+    }
     /**
      * Moves the robot forward for some milliseconds
      * @param milliseconds The time the robot moves
@@ -342,7 +344,7 @@ public class XOmniDrive implements MoveableRobot{
         BR.setPower(0.5);
         BL.setPower(0.5);
         try {
-            wait(milliseconds);
+            sleep(milliseconds);
         }catch (Exception e){}
         FL.setPower(0);
         FR.setPower(0);
@@ -360,7 +362,7 @@ public class XOmniDrive implements MoveableRobot{
          BR.setPower(-0.5);
          BL.setPower(-0.5);
          try {
-             wait(milliseconds);
+             sleep(milliseconds);
          }catch (Exception e){}
          FL.setPower(0);
          FR.setPower(0);
@@ -378,7 +380,7 @@ public class XOmniDrive implements MoveableRobot{
          BR.setPower(-0.5);
          BL.setPower(0.5);
          try {
-             wait(milliseconds);
+             sleep(milliseconds);
          }catch (Exception e){}
          FL.setPower(0);
          FR.setPower(0);
@@ -396,7 +398,7 @@ public class XOmniDrive implements MoveableRobot{
          BR.setPower(0.5);
          BL.setPower(-0.5);
          try {
-             wait(milliseconds);
+             sleep(milliseconds);
          }catch (Exception e){}
          FL.setPower(0);
          FR.setPower(0);
@@ -415,7 +417,7 @@ public class XOmniDrive implements MoveableRobot{
          BR.setPower(-0.5);
          BL.setPower(0.5);
          try {
-             wait(milliseconds);
+             sleep(milliseconds);
          }catch (Exception e){}
          FL.setPower(0);
          FR.setPower(0);
@@ -433,7 +435,7 @@ public class XOmniDrive implements MoveableRobot{
          BR.setPower(0.5);
          BL.setPower(-0.5);
          try {
-             wait(milliseconds);
+             sleep(milliseconds);
          }catch (Exception e){}
          FL.setPower(0);
          FR.setPower(0);

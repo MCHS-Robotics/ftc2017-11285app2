@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name="Basic: Linear OpMode ", group="Linear Opmode ")
-//@Disabled
+@Disabled
 public class TestOpMode extends LinearOpMode {
     DcMotor FL,FR,BR,BL;
     float x,y,x2;

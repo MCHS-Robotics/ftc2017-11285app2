@@ -51,6 +51,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="MichiTeleOp1", group="Linear Opmode")
+@Disabled
 public class MichinoriWada_BasicOpMode_Linear extends LinearOpMode {
 
     // Declare OpMode members.
