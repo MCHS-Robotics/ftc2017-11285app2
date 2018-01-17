@@ -42,7 +42,7 @@ import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 @TeleOp(name="Scaled Movement Test", group="tele op")
 //@Disabled
 public class ScaledMovement extends LinearOpMode {
-    MoveableRobot robot;
+    XOmniDrive robot;
     DcMotor liftP;
     Servo liftL,liftR;
     final float[] posL = {1f,.54f},posR = {0,.35f},posJ = {0,.47f};
@@ -74,8 +74,7 @@ public class ScaledMovement extends LinearOpMode {
         telemetry.update();
         waitForStart();
         while(opModeIsActive()) {
-            robot.run(gamepad1, gamepad2);
-
+            robot.runAdvanced(gamepad1, gamepad2);
             if (!stateC && gamepad2.left_bumper) {
                 stateC = true;
                 if (!dir) {
