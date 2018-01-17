@@ -124,6 +124,53 @@ public class XOmniDrive implements MoveableRobot{
         BR.setPower((x+y) * movePower - x2 * turnPower);
     }
 
+    /**
+     * moves the robot in teleop using the 2 thumbsticks
+     * Left joystick: movement in any direction
+     * Right joystick: turning
+     * @param    gamepad1 the first controller being used for the robot
+     * @param    gamepad2 the second controller being used for the robot
+     */
+    public void runAdvanced(Gamepad gamepad1, Gamepad gamepad2){
+        float lookupTable[] = {-1f,-.5f,-.25f,-.125f,0,.125f,.25f,.5f,1f};
+        x = gamepad1.left_stick_x;
+        if(Math.abs(x) < deadZone)x = 0;
+        y = -gamepad1.left_stick_y;
+        if(Math.abs(y) < deadZone)y = 0;
+        x2 = gamepad1.right_stick_x;
+        if(Math.abs(x2) < deadZone)x2 = 0;
+        FL.setPower((x+y) * movePower + GetPower(lookupTable,x2));
+        FR.setPower((-x+y) * movePower - GetPower(lookupTable,x2));
+        BL.setPower((-x+y) * movePower + GetPower(lookupTable,x2));
+        BR.setPower((x+y) * movePower - GetPower(lookupTable,x2));
+    }
+
+    /**
+     * returns a variable length
+     * @param numPerSide the data points per side
+     * @return the lookup table
+     */
+    public float[] LookupTable(int numPerSide){
+        float[] table = new float[numPerSide* 2 + 1];
+        table[numPerSide] = 0;
+        for(int i = 0; i < numPerSide;i++){
+            table[numPerSide-1-i] = -1.0f*i*i/(numPerSide-1)/(numPerSide-1);
+            table[numPerSide+1+i] = 1.0f*i*i/(numPerSide-1)/(numPerSide-1);
+        }
+        return table;
+    }
+
+    /**
+     * gets a new power through the lookup table
+     * @param lookupTable the lookup table to be used
+     * @param data the data point to be matched
+     * @return the power from the table
+     */
+    public float GetPower(float[] lookupTable,float data){
+        int len = lookupTable.length/2;
+        return lookupTable[Math.round(data * len)+len];
+    }
+
     //Auto
 
       /**

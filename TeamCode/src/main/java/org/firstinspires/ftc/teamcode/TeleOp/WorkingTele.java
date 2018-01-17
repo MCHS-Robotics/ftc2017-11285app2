@@ -44,7 +44,7 @@ public class WorkingTele extends LinearOpMode {
     MoveableRobot robot;
     DcMotor liftP;
     Servo liftL,liftR;
-    final float[] posL = {.0f,.32f},posR = {1,.6f},posJ = {0,.47f};
+    final float[] posL = {1f,.54f},posR = {0,.35f},posJ = {0,.47f};
     boolean stateC = false,dir = false;
 
     /**
@@ -62,8 +62,8 @@ public class WorkingTele extends LinearOpMode {
         liftR = hardwareMap.servo.get("liftR");
         //jewel = hardwareMap.servo.get("jewel");
         liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftL.setPosition(posL[1]);
-        liftR.setPosition(posR[1]);
+        liftL.setPosition(posL[0]);
+        liftR.setPosition(posR[0]);
         //jewel.setPosition(posJ[0]);
 
         robot = new XOmniDrive(hardwareMap);
@@ -73,7 +73,7 @@ public class WorkingTele extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()) {
             robot.run(gamepad1, gamepad2);
-            /*
+
             if (!stateC && gamepad2.left_bumper) {
                 stateC = true;
                 if (!dir) {
@@ -88,19 +88,11 @@ public class WorkingTele extends LinearOpMode {
                     dir = false;
                 }
             }
-            */
-            if(gamepad2.left_trigger > .3){
-             liftL.setPosition(liftL.getPosition()+.01);
-             liftR.setPosition(liftR.getPosition()-.01);
-            }
-            if(gamepad2.right_trigger > .3){
-                liftL.setPosition(liftL.getPosition()-.01);
-                liftR.setPosition(liftR.getPosition()+.01);
-            }
 
             if (stateC && !gamepad2.left_bumper) {
                 stateC = false;
             }
+
 
             if (gamepad2.b) {
                 liftP.setPower(.2);
@@ -109,13 +101,7 @@ public class WorkingTele extends LinearOpMode {
         }else{
                 liftP.setPower(0);
             }
-/*
-            if(gamepad2.a){
-                liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            }else{
-                liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
-*/
+
             idle();
         }
     }
