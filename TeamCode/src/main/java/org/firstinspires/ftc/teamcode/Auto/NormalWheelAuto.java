@@ -41,16 +41,10 @@ import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
 @Autonomous(name="Basic Auto", group="Auto")
 public class NormalWheelAuto extends LinearOpMode {
     NormalDrive robot;
-    VuforiaIsDaWae vuforia;
     @Override
     public void runOpMode() {
-        vuforia = new VuforiaIsDaWae(hardwareMap);
         robot = new NormalDrive(hardwareMap);
         waitForStart();
-        vuforia.activate();
-        telemetry.addData("Vue",vuforia.getPos());
-        telemetry.update();
         robot.forward(12);
-        vuforia.deactivate();
         }
 }
