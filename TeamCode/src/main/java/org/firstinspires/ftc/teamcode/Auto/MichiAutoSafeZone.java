@@ -51,7 +51,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="MichiSafeZone", group="Linear Opmode")
+@Autonomous(name="MichiSafeZone1", group="Linear Opmode")
 //@Disabled
 public class MichiAutoSafeZone extends LinearOpMode {
 

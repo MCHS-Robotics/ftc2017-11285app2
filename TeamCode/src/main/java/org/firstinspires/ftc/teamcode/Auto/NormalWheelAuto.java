@@ -45,6 +45,6 @@ public class NormalWheelAuto extends LinearOpMode {
     public void runOpMode() {
         robot = new NormalDrive(hardwareMap);
         waitForStart();
-        robot.forward(12);
+        robot.ForwardTime(1500);
         }
 }
