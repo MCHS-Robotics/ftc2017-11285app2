@@ -81,9 +81,10 @@ public class NathanAuto extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-
+            leftDrive.setPower(1);
+            rightDrive.setPower(1);
             // Setup a variable for each drive wheel to save power level for telemetry
-            double leftPower;
+            /*double leftPower;
             double rightPower;
 
             // Choose to drive using either Tank Mode, or POV Mode
@@ -108,7 +109,7 @@ public class NathanAuto extends LinearOpMode {
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-            telemetry.update();
+            telemetry.update();*/
         }
     }
 }
