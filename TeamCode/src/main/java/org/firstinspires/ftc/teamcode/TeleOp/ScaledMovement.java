@@ -45,7 +45,7 @@ public class ScaledMovement extends LinearOpMode {
     XOmniDrive robot;
     DcMotor liftP;
     Servo liftL,liftR;
-    final float[] posL = {1f,.52f},posR = {0,.37f},posJ = {0,.47f};
+    final float[] posL = {1f,.50f},posR = {0,.39f},posJ = {0,.47f};
     boolean stateC = false,dir = false;
 
 

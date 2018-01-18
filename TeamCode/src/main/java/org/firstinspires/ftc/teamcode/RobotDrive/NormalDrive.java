@@ -224,4 +224,18 @@ public class NormalDrive implements MoveableRobot{
             R.setPower(0);
         }catch(Exception e){}
         }
+
+    /**
+     * Moves the robot forward for some milliseconds
+     * @param milliseconds The time the robot moves
+     */
+    public void ForwardTime(int milliseconds){
+        L.setPower(0.5);
+        R.setPower(0.5);
+        try {
+            sleep(milliseconds);
+        }catch (Exception e){}
+        L.setPower(0);
+        R.setPower(0);
+    }
 }
