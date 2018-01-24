@@ -73,8 +73,8 @@ public class ScoreTestAuto extends LinearOpMode {
         liftP.setPower(.3);
         sleep(800);
         liftP.setPower(0);
-        robot.left(18);
-        robot.forward(2);
+        robot.left(19);
+        robot.forward(6);
       //colorSensor.colorStats(telemetry);
         ///////////////////////
         }
