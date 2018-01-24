@@ -140,16 +140,16 @@ public class XOmniDrive implements MoveableRobot{
         x2 = gamepad1.right_stick_x;
         if(Math.abs(x2) < deadZone)x2 = 0;
         float dpadPower = .6f;
-        FL.setPower((x+y) * movePower + GetPower(lookupTable,x2)
+        FL.setPower(GetPower(lookupTable,.8f*(x+y)) * movePower + GetPower(lookupTable,x2)
         + ((gamepad1.dpad_up)? dpadPower:0) +((gamepad1.dpad_down)? -dpadPower:0) +((gamepad1.dpad_left)? -dpadPower:0) +((gamepad1.dpad_right)? dpadPower:0)
         );
-        FR.setPower((-x+y) * movePower - GetPower(lookupTable,x2)
+        FR.setPower(GetPower(lookupTable,.8f*(-x+y)) * movePower - GetPower(lookupTable,x2)
                 + ((gamepad1.dpad_up)? dpadPower:0) +((gamepad1.dpad_down)? -dpadPower:0) +((gamepad1.dpad_left)? dpadPower:0) +((gamepad1.dpad_right)? -dpadPower:0)
         );
-        BL.setPower((-x+y) * movePower + GetPower(lookupTable,x2)
+        BL.setPower(GetPower(lookupTable,.8f*(-x+y)) * movePower + GetPower(lookupTable,x2)
                 + ((gamepad1.dpad_up)? dpadPower:0) +((gamepad1.dpad_down)? -dpadPower:0) +((gamepad1.dpad_left)? -dpadPower:0) +((gamepad1.dpad_right)? dpadPower:0)
         );
-        BR.setPower((x+y) * movePower - GetPower(lookupTable,x2)
+        BR.setPower(GetPower(lookupTable,.8f*(x+y)) * movePower - GetPower(lookupTable,x2)
                 + ((gamepad1.dpad_up)? dpadPower:0) +((gamepad1.dpad_down)? -dpadPower:0) +((gamepad1.dpad_left)? dpadPower:0) +((gamepad1.dpad_right)? -dpadPower:0)
         );
     }
