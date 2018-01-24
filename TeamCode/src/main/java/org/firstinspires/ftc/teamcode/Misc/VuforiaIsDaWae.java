@@ -41,6 +41,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
+import static java.lang.Thread.sleep;
+
 public class VuforiaIsDaWae implements Runnable{
 
     VuforiaLocalizer vuforia;
@@ -133,8 +135,12 @@ public class VuforiaIsDaWae implements Runnable{
    }
 
    public void run(){
-       while (run)
-       getTelemetryData(telemetry);
+       while (run) {
+           getTelemetryData(telemetry);
+           try {
+               sleep(100);
+           }catch (Exception e){}
+       }
    }
  }
 
