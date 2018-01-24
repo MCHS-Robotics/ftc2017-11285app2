@@ -70,13 +70,19 @@ public class ScoreTestAuto extends LinearOpMode {
         //colorSensor.on();
         waitForStart();
         ///////////////////////
+        vueforia.getTelemetryData(telemetry);
         liftP.setPower(.3);
         sleep(800);
         liftP.setPower(0);
-        robot.left(18);
-        robot.forward(2);
+        robot.left(19);
+        robot.forward(3);
       //colorSensor.colorStats(telemetry);
         ///////////////////////
+        liftP.setPower(-.3);
+        sleep(800);
+        liftP.setPower(0);
+        liftL.setPosition(posL[0]);
+        liftR.setPosition(posR[0]);
         }
 
     /**
