@@ -41,17 +41,19 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-public class VuforiaIsDaWae{
+public class VuforiaIsDaWae implements Runnable{
 
     VuforiaLocalizer vuforia;
     VuforiaTrackables relicTrackable;
-
+    Telemetry telemetry;
+    boolean run = true;
     /**
      * Creates a VuforiaIsDaWae object
      * @param hardwareMap The hardware map of the robot
      */
-   public VuforiaIsDaWae(HardwareMap hardwareMap) {
+   public VuforiaIsDaWae(HardwareMap hardwareMap,Telemetry telemetry) {
 
+       this.telemetry = telemetry;
        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
        parameters.cameraMonitorFeedback= VuforiaLocalizer.Parameters.CameraMonitorFeedback.BUILDINGS;
@@ -70,6 +72,7 @@ public class VuforiaIsDaWae{
      * Activates the relicTrackables for vueforia
      */
    public void activate(){
+       run = true;
        relicTrackable.activate();
    }
 
@@ -78,6 +81,7 @@ public class VuforiaIsDaWae{
      */
     public void deactivate(){
         relicTrackable.deactivate();
+        run = false;
     }
 
     /**
@@ -126,6 +130,11 @@ public class VuforiaIsDaWae{
            telemetry.addData("VueMark", "Right not Visible");
        }
        telemetry.update();
+   }
+
+   public void run(){
+       while (run)
+       getTelemetryData(telemetry);
    }
  }
 
