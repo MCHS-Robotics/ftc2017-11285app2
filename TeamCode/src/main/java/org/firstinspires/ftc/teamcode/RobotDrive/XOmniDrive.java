@@ -141,10 +141,10 @@ public class XOmniDrive implements MoveableRobot{
         if(Math.abs(x2) < deadZone)x2 = 0;
         float dpadPower = .6f;
         FL.setPower((x+y) * movePower + GetPower(lookupTable,x2)
-        + ((gamepad1.dpad_up)? dpadPower:0) +((gamepad1.dpad_down)? -dpadPower:0) +((gamepad1.dpad_left)? -dpadPower:0) +((gamepad1.dpad_right)? dpadPower:0)
+        + ((gamepad1.dpad_up)? dpadPower:0) +((gamepad1.dpad_down)? -dpadPower:0) +((gamepad1.dpad_left)? dpadPower:0) +((gamepad1.dpad_right)? -dpadPower:0)
         );
         FR.setPower((-x+y) * movePower - GetPower(lookupTable,x2)
-                + ((gamepad1.dpad_up)? dpadPower:0) +((gamepad1.dpad_down)? -dpadPower:0) +((gamepad1.dpad_left)? dpadPower:0) +((gamepad1.dpad_right)? -dpadPower:0)
+                + ((gamepad1.dpad_up)? dpadPower:0) +((gamepad1.dpad_down)? -dpadPower:0) +((gamepad1.dpad_left)? -dpadPower:0) +((gamepad1.dpad_right)? dpadPower:0)
         );
         BL.setPower((-x+y) * movePower + GetPower(lookupTable,x2)
                 + ((gamepad1.dpad_up)? dpadPower:0) +((gamepad1.dpad_down)? -dpadPower:0) +((gamepad1.dpad_left)? -dpadPower:0) +((gamepad1.dpad_right)? dpadPower:0)
@@ -280,7 +280,7 @@ public class XOmniDrive implements MoveableRobot{
     * @param    inches the distance, in inches, the robot moves
     */
     public void right(float inches){
-        int pos = -(int)(inches * Mstep * Math.sqrt(2) / Cw);
+        int pos = (int)(inches * Mstep * Math.sqrt(2) / Cw);
         FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);

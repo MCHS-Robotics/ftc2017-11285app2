@@ -30,16 +30,9 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Misc.ColorSensorIsDaWae;
 import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
@@ -47,15 +40,14 @@ import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@Autonomous(name="Current Working Auto", group="Auto")
-public class WorkingAuto extends LinearOpMode {
+@Autonomous(name="Vue Blue Score", group="Auto")
+public class ScoreBlockBlueVue extends LinearOpMode {
     MoveableRobot robot;
     Servo jewel;
     Servo liftL,liftR;
     ColorSensorIsDaWae colorSensor;
     VuforiaIsDaWae vueforia;
     DcMotor liftP;
-
     final float[] posL = {1f,.54f},posR = {0,.35f},posJ = {0,.47f};
 
     /**
@@ -63,6 +55,7 @@ public class WorkingAuto extends LinearOpMode {
      */
     @Override
     public void runOpMode() {
+
         vueforia = new VuforiaIsDaWae(hardwareMap,telemetry);
         //colorSensor = new ColorSensorIsDaWae(hardwareMap,"color");
         robot = new XOmniDrive(19.9,4,1120,hardwareMap);
@@ -74,15 +67,26 @@ public class WorkingAuto extends LinearOpMode {
         liftR = hardwareMap.servo.get("liftR");
         liftL.setPosition(posL[1]);
         liftR.setPosition(posR[1]);
-        //colorSensor.on();
+        Thread thread = new Thread(vueforia);
+        vueforia.activate();
         waitForStart();
-        ///////////////////////
-        liftP.setPower(.3);
-        sleep(1000);
-        liftP.setPower(0);
-        robot.forward(18);
-      //colorSensor.colorStats(telemetry);
-        ///////////////////////
+        thread.start();
+        moveLift(.3f,800);
+        int pos = vueforia.getPos();//0 = none, 1 = left, 2 = right, 3 = center
+        moveLift(-.3f,700);
+        //////////////////////////////////////////////////////
+        if(pos == 0 || pos == 3)
+            robot.right(18);
+        else if(pos == 2)
+            robot.right(22);
+        else
+            robot.right(14);
+        //////////////////////////////////////////////////////
+        robot.forward(5);
+        moveLift(-.3f,100);
+        liftL.setPosition(posL[0]);
+        liftR.setPosition(posR[0]);
+        vueforia.deactivate();
         }
 
     /**
@@ -101,6 +105,12 @@ public class WorkingAuto extends LinearOpMode {
             }
             jewel.setPosition(0);
             sleep(100);
+    }
+
+    public void moveLift(float power,int msecs){
+        liftP.setPower(power);
+        sleep(msecs);
+        liftP.setPower(0);
     }
 
 }

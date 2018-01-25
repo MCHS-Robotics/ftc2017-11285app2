@@ -34,16 +34,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.teamcode.Misc.ColorSensorIsDaWae;
-import org.firstinspires.ftc.teamcode.Misc.Telemetry;
 import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
 import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@Autonomous(name="Score Test", group="Auto")
-public class ScoreTestAuto extends LinearOpMode {
+@Autonomous(name="Working Blue Score", group="Auto")
+public class ScoreBlockBlue extends LinearOpMode {
     MoveableRobot robot;
     Servo jewel;
     Servo liftL,liftR;
@@ -73,17 +71,17 @@ public class ScoreTestAuto extends LinearOpMode {
         vueforia.activate();
         //colorSensor.on();
         waitForStart();
-        thread.run();
+        thread.start();
         ///////////////////////
         liftP.setPower(.3);
-        sleep(800);
+        sleep(100);
         liftP.setPower(0);
-        robot.left(19);
-        robot.forward(3);
+        robot.right(18);
+        robot.forward(5);
       //colorSensor.colorStats(telemetry);
         ///////////////////////
         liftP.setPower(-.3);
-        sleep(800);
+        sleep(100);
         liftP.setPower(0);
         liftL.setPosition(posL[0]);
         liftR.setPosition(posR[0]);
