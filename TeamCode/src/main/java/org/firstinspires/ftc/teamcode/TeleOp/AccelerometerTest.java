@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -36,7 +37,7 @@ import org.firstinspires.ftc.teamcode.Misc.Accelerator;
 
 
 @TeleOp(name="Accelerometer", group="Linear Opmode")
-//@Disabled
+@Disabled
 public class AccelerometerTest extends LinearOpMode {
     Accelerator accel;
     @Override

@@ -27,14 +27,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.Learning;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -52,31 +51,46 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="JayAutonomous ", group="Linear  Opmode")
+@Autonomous(name="Test Dem Moters", group="Auto")
 @Disabled
-public class JayAutoQuick extends LinearOpMode {
+public class BasicOpMode_Linear extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    DcMotor fl,fr,bl,br;
+    DcMotor FL,FR,BL,BR;
 
     @Override
     public void runOpMode() {
-        fl = hardwareMap.dcMotor.get("fl");
-        fr = hardwareMap.dcMotor.get("fr");
-        bl = hardwareMap.dcMotor.get("bl");
-        br = hardwareMap.dcMotor.get("br");
-        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fr.setDirection(DcMotorSimple.Direction.REVERSE);
-        br.setDirection(DcMotorSimple.Direction.REVERSE);
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
+      FL = hardwareMap.dcMotor.get("fl");
+        FR = hardwareMap.dcMotor.get("fr");
+        BL = hardwareMap.dcMotor.get("bl");
+        BR = hardwareMap.dcMotor.get("br");
+        // Wait for the game to start (driver presses PLAY)
         waitForStart();
-    }
-    public void moveForward() {
+        runtime.reset();
+
+        // run until the end of the match (driver presses STOP)
+
+
+                FL.setPower(0.5);
+                sleep(1000);
+                FL.setPower(0);
+
+                FR.setPower(0.5);
+                sleep(1000);
+                FR.setPower(0);
+
+                BL.setPower(0.5);
+                sleep(1000);
+                BL.setPower(0);
+
+                BR.setPower(0.5);
+                sleep(1000);
+                BR.setPower(0);
+
 
     }
-
-    }
-
+}

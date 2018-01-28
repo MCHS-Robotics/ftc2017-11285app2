@@ -30,16 +30,15 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Misc.ColorSensorIsDaWae;
-import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
 import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
 @Autonomous(name="Test Motors", group="Auto")
+@Disabled
 public class TestMotorRobots extends LinearOpMode {
     MoveableRobot robot;
 

@@ -30,18 +30,19 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
-import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
+import org.firstinspires.ftc.teamcode.Misc.Vuforia;
 
 
 @Autonomous(name="Vue Test", group="Auto")
+@Disabled
 public class Vue extends LinearOpMode {
-    VuforiaIsDaWae vuforia;
+    Vuforia vuforia;
     @Override
     public void runOpMode() {
-        vuforia = new VuforiaIsDaWae(hardwareMap, telemetry);
+        vuforia = new Vuforia(hardwareMap, telemetry);
         vuforia.activate();
         Thread vue = new Thread(vuforia);
         waitForStart();

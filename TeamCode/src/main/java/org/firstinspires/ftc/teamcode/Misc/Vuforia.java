@@ -43,17 +43,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 import static java.lang.Thread.sleep;
 
-public class VuforiaIsDaWae implements Runnable{
+public class Vuforia implements Runnable{
 
     VuforiaLocalizer vuforia;
     VuforiaTrackables relicTrackable;
     Telemetry telemetry;
     boolean run = true;
     /**
-     * Creates a VuforiaIsDaWae object
+     * Creates a Vuforia object
      * @param hardwareMap The hardware map of the robot
      */
-   public VuforiaIsDaWae(HardwareMap hardwareMap,Telemetry telemetry) {
+   public Vuforia(HardwareMap hardwareMap, Telemetry telemetry) {
 
        this.telemetry = telemetry;
        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());

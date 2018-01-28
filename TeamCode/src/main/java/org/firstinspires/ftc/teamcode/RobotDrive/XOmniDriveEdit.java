@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode.RobotDrive;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static java.lang.Thread.sleep;
 
-public class XOmniDrive implements MoveableRobot{
+public class XOmniDriveEdit{
     boolean DEBUGGING = false;
     DcMotor FL,FR,BR,BL,liftP;
     float y,x2,x,deadZone,turnPower,movePower;
@@ -25,7 +26,7 @@ public class XOmniDrive implements MoveableRobot{
     * Creates a basic x-omni drive for the robot with set defaults
     * @param    hardwareMap the hardware map of the robot for initialization
     */
-    public XOmniDrive(HardwareMap hardwareMap){
+    public XOmniDriveEdit(HardwareMap hardwareMap){
         deadZone = 0;
         turnPower = .5f;
         movePower = .5f;
@@ -38,7 +39,7 @@ public class XOmniDrive implements MoveableRobot{
 
         init(hardwareMap);
     }
-    
+
      /**
     * Creates a x-omni drive for the robot with variables for the teleop
     * @param    deadZone    the radius (from 0-1) of the deadzone from the gamepad
@@ -46,7 +47,7 @@ public class XOmniDrive implements MoveableRobot{
     * @param    movePower   scaling modifier for the translation movement power of the robot
     * @param    hardwareMap the hardware map of the robot for initialization
     */
-    public XOmniDrive(float deadZone, float turnPower, float movePower, HardwareMap hardwareMap){
+    public XOmniDriveEdit(float deadZone, float turnPower, float movePower, HardwareMap hardwareMap){
         this.deadZone = deadZone;
         this.turnPower = turnPower;
         this.movePower = movePower;
@@ -59,15 +60,15 @@ public class XOmniDrive implements MoveableRobot{
 
         init(hardwareMap);
     }
-    
+
       /**
     * Creates a x-omni drive for the robot with variables for the autonomous
-    * @param    robotDiameter   the length, in inches, between 2 diagonal wheels 
+    * @param    robotDiameter   the length, in inches, between 2 diagonal wheels
     * @param    wheelDiameter   the diameter, in inches, of the wheels used on the robot
     * @param    motorControllerSteps    the amount of ticks the motors have in one revolution
     * @param    hardwareMap the hardware map of the robot for initialization
     */
-    public XOmniDrive(double robotDiameter, double wheelDiameter, int motorControllerSteps, HardwareMap hardwareMap){
+    public XOmniDriveEdit(double robotDiameter, double wheelDiameter, int motorControllerSteps, HardwareMap hardwareMap){
         deadZone = 0;
         turnPower = .5f;
         movePower = .5f;
@@ -200,6 +201,7 @@ public class XOmniDrive implements MoveableRobot{
         FR.setPower(0.3);
         BL.setPower(0.3);
         BR.setPower(0.3);
+
         while(FL.isBusy() && FR.isBusy() && BL.isBusy() && BR.isBusy()){
             if(DEBUGGING)displayStats();
         }
@@ -371,8 +373,7 @@ public class XOmniDrive implements MoveableRobot{
     * tests robot to make sure it is in working order by rotating each wheel forward for a variable amt of time
     * @param    seconds time spent moving motors
     */
-    public void testDrive(int seconds) {
-        try {
+    public void testDrive(int seconds) throws InterruptedException{
             FL.setPower(0.5);
             sleep(1000);
             FL.setPower(0);
@@ -388,20 +389,17 @@ public class XOmniDrive implements MoveableRobot{
             BR.setPower(0.5);
             sleep(1000);
             BR.setPower(0);
-        }catch (Exception e){}
     }
     /**
      * Moves the robot forward for some milliseconds
      * @param milliseconds The time the robot moves
      */
-    public void ForwardTime(int milliseconds){
+    public void ForwardTime(int milliseconds)  throws InterruptedException{
         FL.setPower(0.5);
         FR.setPower(0.5);
         BR.setPower(0.5);
         BL.setPower(0.5);
-        try {
-            sleep(milliseconds);
-        }catch (Exception e){}
+        sleep(milliseconds);
         FL.setPower(0);
         FR.setPower(0);
         BL.setPower(0);
@@ -412,14 +410,12 @@ public class XOmniDrive implements MoveableRobot{
      * Moves the robot backward for some milliseconds
      * @param milliseconds The time the robot moves
      */
-     public void BackwardTime(int milliseconds){
+     public void BackwardTime(int milliseconds)  throws InterruptedException{
          FL.setPower(-0.5);
          FR.setPower(-0.5);
          BR.setPower(-0.5);
          BL.setPower(-0.5);
-         try {
-             sleep(milliseconds);
-         }catch (Exception e){}
+         sleep(milliseconds);
          FL.setPower(0);
          FR.setPower(0);
          BL.setPower(0);
@@ -430,14 +426,12 @@ public class XOmniDrive implements MoveableRobot{
      * Moves the robot left for some milliseconds
      * @param milliseconds The time the robot moves
      */
-     public void LeftTime(int milliseconds){
+     public void LeftTime(int milliseconds)  throws InterruptedException{
          FL.setPower(-0.5);
          FR.setPower(0.5);
          BR.setPower(-0.5);
          BL.setPower(0.5);
-         try {
-             sleep(milliseconds);
-         }catch (Exception e){}
+         sleep(milliseconds);
          FL.setPower(0);
          FR.setPower(0);
          BL.setPower(0);
@@ -448,14 +442,12 @@ public class XOmniDrive implements MoveableRobot{
      * Moves the robot right for some milliseconds
      * @param milliseconds The time the robot moves
      */
-     public void RightTime(int milliseconds){
+     public void RightTime(int milliseconds)  throws InterruptedException{
          FL.setPower(0.5);
          FR.setPower(-0.5);
          BR.setPower(0.5);
          BL.setPower(-0.5);
-         try {
-             sleep(milliseconds);
-         }catch (Exception e){}
+         sleep(milliseconds);
          FL.setPower(0);
          FR.setPower(0);
          BL.setPower(0);
@@ -466,15 +458,13 @@ public class XOmniDrive implements MoveableRobot{
      * turns the robot clockwise for some milliseconds
      * @param milliseconds The time the robot turns
      */
-     public void ClockwiseTime(int milliseconds)
+     public void ClockwiseTime(int milliseconds)  throws InterruptedException
      {
          FL.setPower(0.5);
          FR.setPower(-0.5);
          BR.setPower(-0.5);
          BL.setPower(0.5);
-         try {
-             sleep(milliseconds);
-         }catch (Exception e){}
+         sleep(milliseconds);
          FL.setPower(0);
          FR.setPower(0);
          BL.setPower(0);
@@ -485,24 +475,19 @@ public class XOmniDrive implements MoveableRobot{
      * turns the robot counter clockwise for some milliseconds
      * @param milliseconds The time the robot turns
      */
-     public void CounterClockwiseTime(int milliseconds){
+     public void CounterClockwiseTime(int milliseconds)  throws InterruptedException{
          FL.setPower(-0.5);
          FR.setPower(0.5);
          BR.setPower(0.5);
          BL.setPower(-0.5);
-         try {
-             sleep(milliseconds);
-         }catch (Exception e){}
+         sleep(milliseconds);
          FL.setPower(0);
          FR.setPower(0);
          BL.setPower(0);
          BR.setPower(0);
      }
 
-    /**
-     * Displays information on the robot
-     */
-    private void displayStats(){
+     private void displayStats(){
          telemetry.addData("FL encoder","Curr: " + FL.getCurrentPosition() + "  Tar: " + FL.getTargetPosition());
          telemetry.addLine();
          telemetry.addData("FR encoder","Curr: " + FR.getCurrentPosition() + "  Tar: " + FR.getTargetPosition());

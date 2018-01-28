@@ -27,83 +27,90 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.TeleOp;
+package org.firstinspires.ftc.teamcode.CurrentCode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Func;
+import org.firstinspires.ftc.teamcode.Misc.ColorSense;
+import org.firstinspires.ftc.teamcode.Misc.Vuforia;
 import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@TeleOp(name="Scaled Movement Test", group="tele op")
-//@Disabled
-public class ScaledMovement extends LinearOpMode {
-    XOmniDrive robot;
-    DcMotor liftP;
+@Autonomous(name="Vue Blue Score", group="Auto")
+public class ScoreBlockBlueVue extends LinearOpMode {
+    MoveableRobot robot;
+    Servo jewel;
     Servo liftL,liftR;
-    final float[] posL = {1f,.50f},posR = {0,.39f},posJ = {0,.47f};
-    boolean stateC = false,dir = false;
-
+    ColorSense colorSensor;
+    Vuforia vueforia;
+    DcMotor liftP;
+    final float[] posL = {1f,.54f},posR = {0,.35f},posJ = {0,.47f};
 
     /**
-     * Runs a basic tele-op w/ movement:
-     *  Left joystick: translational movement
-     *  Right joystick: rotational movement
-     *  Left bumper: close/open lift clamp
-     *  B: raises lift
-     *  A: lowers lift
+     * Runs a basic autonomous
      */
     @Override
     public void runOpMode() {
+
+        vueforia = new Vuforia(hardwareMap,telemetry);
+        //colorSensor = new ColorSense(hardwareMap,"color");
+        robot = new XOmniDrive(19.9,4,1120,hardwareMap);
+        jewel = hardwareMap.servo.get("jewel");
+        jewel.setPosition(0);
         liftP = hardwareMap.dcMotor.get("liftM");
+        liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftL = hardwareMap.servo.get("liftL");
         liftR = hardwareMap.servo.get("liftR");
-        //jewel = hardwareMap.servo.get("jewel");
-        liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftL.setPosition(posL[1]);
+        liftR.setPosition(posR[1]);
+        Thread thread = new Thread(vueforia);
+        //vueforia.activate();
+        waitForStart();
+        //thread.start();
+        moveLift(.3f,800);
+        int pos = vueforia.getPos();//0 = none, 1 = left, 2 = right, 3 = center
+        moveLift(-.3f,700);
+        //////////////////////////////////////////////////////
+        if(pos == 0 || pos == 3)
+            robot.right(18);
+        else if(pos == 2)
+            robot.right(22);
+        else
+            robot.right(14);
+        //////////////////////////////////////////////////////
+        robot.forward(5);
+        moveLift(-.3f,100);
         liftL.setPosition(posL[0]);
         liftR.setPosition(posR[0]);
-        //jewel.setPosition(posJ[0]);
-
-        robot = new XOmniDrive(hardwareMap);
-
-        telemetry.addData("setup","initialized");
-        telemetry.update();
-        waitForStart();
-        while(opModeIsActive()) {
-            robot.runAdvanced(gamepad1, gamepad2);
-            if (!stateC && gamepad2.left_bumper) {
-                stateC = true;
-                if (!dir) {
-                    liftL.setPosition(posL[1]);
-                    liftR.setPosition(posR[1]);
-                    // jewel.setPosition(posJ[1]);
-                    dir = true;
-                } else {
-                    liftL.setPosition(posL[0]);
-                    liftR.setPosition(posR[0]);
-                    // jewel.setPosition(posJ[0]);
-                    dir = false;
-                }
-            }
-
-            if (stateC && !gamepad2.left_bumper) {
-                stateC = false;
-            }
-
-
-            if (gamepad2.b) {
-                liftP.setPower(.2);
-            } else if (gamepad2.a){
-                liftP.setPower(-.2);
-        }else{
-                liftP.setPower(0);
-            }
-            
-            idle();
+        vueforia.deactivate();
         }
+
+    /**
+     * Knocks off the left or right jewel
+     * @param left  if true knocks off the left jewel else right
+     */
+    public void moveJewel(boolean left){
+            jewel.setPosition(1);
+            sleep(100);
+            if(left){
+                robot.cClockwise(10);
+                robot.clockwise(10);
+            }else{
+                robot.clockwise(10);
+                robot.cClockwise(10);
+            }
+            jewel.setPosition(0);
+            sleep(100);
     }
+
+    public void moveLift(float power,int msecs){
+        liftP.setPower(power);
+        sleep(msecs);
+        liftP.setPower(0);
+    }
+
 }

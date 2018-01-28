@@ -27,15 +27,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode.CurrentCode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Misc.ColorSensorIsDaWae;
-import org.firstinspires.ftc.teamcode.Misc.VuforiaIsDaWae;
+import org.firstinspires.ftc.teamcode.Misc.ColorSense;
+import org.firstinspires.ftc.teamcode.Misc.Vuforia;
 import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
@@ -45,8 +45,8 @@ public class ScoreBlockRedVue extends LinearOpMode {
     MoveableRobot robot;
     Servo jewel;
     Servo liftL,liftR;
-    ColorSensorIsDaWae colorSensor;
-    VuforiaIsDaWae vueforia;
+    ColorSense colorSensor;
+    Vuforia vueforia;
     DcMotor liftP;
     final float[] posL = {1f,.54f},posR = {0,.35f},posJ = {0,.47f};
 
@@ -56,8 +56,8 @@ public class ScoreBlockRedVue extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        vueforia = new VuforiaIsDaWae(hardwareMap,telemetry);
-        //colorSensor = new ColorSensorIsDaWae(hardwareMap,"color");
+        vueforia = new Vuforia(hardwareMap,telemetry);
+        //colorSensor = new ColorSense(hardwareMap,"color");
         robot = new XOmniDrive(19.9,4,1120,hardwareMap);
         jewel = hardwareMap.servo.get("jewel");
         jewel.setPosition(0);

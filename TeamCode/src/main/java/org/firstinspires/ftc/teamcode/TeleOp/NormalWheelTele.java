@@ -33,7 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Misc.Musiv;
+import org.firstinspires.ftc.teamcode.Misc.Music;
 import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
 
 
@@ -42,10 +42,10 @@ import org.firstinspires.ftc.teamcode.RobotDrive.NormalDrive;
 public class NormalWheelTele extends LinearOpMode {
     NormalDrive robot;
     float forM,backM;
-    Musiv horn;
+    Music horn;
     @Override
     public void runOpMode() {
-        //horn = new Musiv(this.hardwareMap.appContext, com.qualcomm.ftcrobotcontroller.R.raw.sonic);
+        //horn = new Music(this.hardwareMap.appContext, com.qualcomm.ftcrobotcontroller.R.raw.sonic);
 
         robot = new NormalDrive(.3f,1f,1f,hardwareMap);
 

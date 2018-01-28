@@ -29,63 +29,32 @@
 
 package org.firstinspires.ftc.teamcode.Misc;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import android.media.MediaPlayer;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
-import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.sun.tools.javac.util.Context;
 
 
-public class ColorSensorIsDaWae {
+//@Disabled
+public class Music {
+    MediaPlayer sounds;
 
-    ColorSensor colorSensor;
+    public Music(android.content.Context context, int data){
+        sounds = MediaPlayer.create(context,data);
+        sounds.setLooping(false);
 
-    /**
-     * creates a ColorSensorIsDaWae object
-     * @param hardwareMap hardware map on the phone
-     * @param deviceName the name the color sensor is mapped to
-     */
-    public ColorSensorIsDaWae(HardwareMap hardwareMap,String deviceName) {
-        colorSensor = hardwareMap.colorSensor.get(deviceName);
     }
 
-    /**
-     * turns led on
-     */
-    public void on(){
-        colorSensor.enableLed(true);
+    public void prepare(){
+        try {
+            sounds.prepare();
+        }catch (Exception e){}
     }
 
-    /**
-     * turns led off
-     */
-    public void off(){
-        colorSensor.enableLed(false);
+    public void play(){
+        try {
+            sounds.start();
+        }catch (Exception e){}
     }
-
-    /**
-     * returns RGB color for colorSensor
-     */
-    public void colorStats(Telemetry telemetry){
-        telemetry.addData("Blue:",colorSensor.blue());
-        telemetry.addLine();
-        telemetry.addData("Green:",colorSensor.green());
-        telemetry.addLine();
-        telemetry.addData("Red:",colorSensor.red());
-        telemetry.update();
-    }
-
-    /**
-     * returns if the object is red
-     * @return true if object is more red then blue
-     */
-    public boolean isRed(){
-        boolean isRed = colorSensor.red() > colorSensor.blue();
-        return isRed;
-    }
-
 }
