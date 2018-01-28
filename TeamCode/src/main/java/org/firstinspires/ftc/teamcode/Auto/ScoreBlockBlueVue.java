@@ -68,9 +68,9 @@ public class ScoreBlockBlueVue extends LinearOpMode {
         liftL.setPosition(posL[1]);
         liftR.setPosition(posR[1]);
         Thread thread = new Thread(vueforia);
-        vueforia.activate();
+        //vueforia.activate();
         waitForStart();
-        thread.start();
+        //thread.start();
         moveLift(.3f,800);
         int pos = vueforia.getPos();//0 = none, 1 = left, 2 = right, 3 = center
         moveLift(-.3f,700);

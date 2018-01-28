@@ -69,11 +69,11 @@ public class ScoreBlockRed extends LinearOpMode {
         liftR = hardwareMap.servo.get("liftR");
         liftL.setPosition(posL[1]);
         liftR.setPosition(posR[1]);
-        Thread thread = new Thread(vueforia);
+        //Thread thread = new Thread(vueforia);
         vueforia.activate();
         //colorSensor.on();
         waitForStart();
-        thread.start();
+        //thread.start();
         ///////////////////////
         liftP.setPower(.3);
         sleep(100);
