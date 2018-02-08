@@ -33,16 +33,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Misc.Accelerator;
+import org.firstinspires.ftc.teamcode.Misc.Gyro;
 
 
 @TeleOp(name="Accelerometer", group="Linear Opmode")
 @Disabled
 public class AccelerometerTest extends LinearOpMode {
-    Accelerator accel;
+    Gyro accel;
     @Override
     public void runOpMode() {
-        accel = new Accelerator(hardwareMap);
+        accel = new Gyro(hardwareMap);
 
         telemetry.addData("setup","initialized");
         telemetry.update();

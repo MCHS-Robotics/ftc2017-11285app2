@@ -42,11 +42,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 
 //@Disabled
-public class Accelerator {
+public class Gyro {
     BNO055IMU imu;
     Orientation angles;
     Acceleration gravity;
-public Accelerator(HardwareMap hardwareMap) {
+public Gyro(HardwareMap hardwareMap) {
     BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
     parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
     parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
