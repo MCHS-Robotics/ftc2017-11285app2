@@ -10,11 +10,21 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 public class Arm {
+
     DcMotor elbow;
+
     Servo wrist,hand;
+
     float[] handPos = {0,1}; //{open,closed}
+
     float elbowPos = 1000; //maximum movement
+
     float wristPos = .5f; //resting
+
+    int elbowMovePos;
+
+    float elbowPow;
+
     public Arm(HardwareMap map){
         elbow = map.dcMotor.get("elbow");
         wrist = map.servo.get("wrist");
@@ -37,6 +47,8 @@ public class Arm {
         elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elbow.setTargetPosition(pos);
         elbow.setPower(power);
+        elbowMovePos = pos;
+        elbowPow = power;
     }
 
     public void checkElbow(){
@@ -46,6 +58,17 @@ public class Arm {
     }
 
     public void checkElbow(int maxError){
+        if(!elbow.isBusy()){
+            if(Math.abs(elbowMovePos-elbow.getCurrentPosition()) > maxError){
+                elbow.setTargetPosition(elbowMovePos);
+                elbowPow/=2;
+                elbow.setPower(elbowPow);
+            }
+            else elbow.setPower(0);
+        }
+    }
 
+    public void restWrist(){
+        wrist.setPosition(wristPos);
     }
 }

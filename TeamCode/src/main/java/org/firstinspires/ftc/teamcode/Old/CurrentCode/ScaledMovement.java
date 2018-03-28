@@ -29,71 +29,86 @@
 
 package org.firstinspires.ftc.teamcode.CurrentCode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Misc.ColorSense;
-import org.firstinspires.ftc.teamcode.Misc.Vuforia;
+import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.teamcode.RobotDrive.MoveableRobot;
 import org.firstinspires.ftc.teamcode.RobotDrive.XOmniDrive;
 
 
-@Autonomous(name="Drive to zone", group="Auto")
-public class ParkInZone extends LinearOpMode {
-    MoveableRobot robot;
-    Servo jewel;
-    Servo liftL,liftR;
-    ColorSense colorSensor;
-    Vuforia vueforia;
+@TeleOp(name="Scaled Movement", group="tele op")
+//@Disabled
+public class ScaledMovement extends LinearOpMode {
+    XOmniDrive robot;
     DcMotor liftP;
+    Servo liftL,liftR;
+    final float[] posL = {1f,.50f,.55f},posR = {0,.39f,.34f},posJ = {0,.47f};
+    boolean stateC = false,dir = false;
 
-    final float[] posL = {1f,.54f},posR = {0,.35f},posJ = {0,.47f};
 
     /**
-     * Runs a basic autonomous
+     * Runs a basic tele-op w/ movement:
+     *  Left joystick: translational movement
+     *  Right joystick: rotational movement
+     *  Left bumper: close/open lift clamp
+     *  B: raises lift
+     *  A: lowers lift
      */
     @Override
     public void runOpMode() {
-        vueforia = new Vuforia(hardwareMap,telemetry);
-        //colorSensor = new ColorSense(hardwareMap,"color");
-        robot = new XOmniDrive(19.9,4,1120,hardwareMap);
-        jewel = hardwareMap.servo.get("jewel");
-        jewel.setPosition(0);
         liftP = hardwareMap.dcMotor.get("liftM");
-        liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftL = hardwareMap.servo.get("liftL");
         liftR = hardwareMap.servo.get("liftR");
-        liftL.setPosition(posL[1]);
-        liftR.setPosition(posR[1]);
-        //colorSensor.on();
+        //jewel = hardwareMap.servo.get("jewel");
+        liftP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftL.setPosition(posL[0]);
+        liftR.setPosition(posR[0]);
+        //jewel.setPosition(posJ[0]);
+
+        robot = new XOmniDrive(hardwareMap);
+
+        telemetry.addData("setup","initialized");
+        telemetry.update();
         waitForStart();
-        ///////////////////////
-        liftP.setPower(.3);
-        sleep(1000);
-        liftP.setPower(0);
-        robot.forward(18);
-      //colorSensor.colorStats(telemetry);
-        ///////////////////////
-        }
-
-    /**
-     * Knocks off the left or right jewel
-     * @param left  if true knocks off the left jewel else right
-     */
-    public void moveJewel(boolean left){
-            jewel.setPosition(1);
-            sleep(100);
-            if(left){
-                robot.cClockwise(10);
-                robot.clockwise(10);
-            }else{
-                robot.clockwise(10);
-                robot.cClockwise(10);
+        while(opModeIsActive()) {
+            robot.runAdvanced(gamepad1, gamepad2);
+            if (!stateC && gamepad2.left_bumper) {
+                stateC = true;
+                if (!dir) {
+                    liftL.setPosition(posL[1]);
+                    liftR.setPosition(posR[1]);
+                    // jewel.setPosition(posJ[1]);
+                    dir = true;
+                } else {
+                    liftL.setPosition(posL[0]);
+                    liftR.setPosition(posR[0]);
+                    // jewel.setPosition(posJ[0]);
+                    dir = false;
+                }
             }
-            jewel.setPosition(0);
-            sleep(100);
-    }
 
+            if(gamepad2.right_bumper) {
+                liftL.setPosition(posL[2]);
+                liftR.setPosition(posR[2]);
+            }
+
+            if (stateC && !gamepad2.left_bumper) {
+                stateC = false;
+            }
+
+
+            if (gamepad2.b) {
+                liftP.setPower(.2);
+            } else if (gamepad2.a){
+                liftP.setPower(-.2);
+        }else{
+                liftP.setPower(0);
+            }
+            
+            idle();
+        }
+    }
 }
